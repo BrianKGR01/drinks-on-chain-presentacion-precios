@@ -221,7 +221,9 @@
           <tr><td style="color:var(--oro-hondo)">10–14</td><td><strong>Fase 1 · ERP</strong>: planes, descuentos, complementos y escenarios</td></tr>
           <tr><td style="color:var(--oro-hondo)">15–21</td><td><strong>Fase 2 · Marketplace y exportación</strong>: cómo funciona, qué se cobra y proyecciones</td></tr>
           <tr><td style="color:var(--oro-hondo)">22</td><td><strong>Fase 3 · Investigación</strong>: pendiente de benchmarking</td></tr>
-          <tr><td style="color:var(--oro-hondo)">23–27</td><td>Canal, costos propios, riesgos y cierre</td></tr>
+          <tr><td style="color:var(--oro-hondo)">23–26</td><td>Canal, costos propios, riesgos y guiones de precio</td></tr>
+          <tr><td style="color:var(--oro-hondo)">27–31</td><td><strong>Retorno de la inversión</strong>: lo que costó, cuándo se recupera y a qué dinero apuntar</td></tr>
+          <tr><td style="color:var(--oro-hondo)">32</td><td>Cierre y fuentes</td></tr>
         </tbody>
       </table>
     </div>
@@ -925,21 +927,21 @@
   <div class="cols c2" style="gap:26px">
     <div>
       <table class="compacta">
-        <caption>Estimaciones a verificar con las facturas reales</caption>
+        <caption>Lo que se paga hoy y lo que costaría cuando haga falta</caption>
         <thead><tr><th>Concepto</th><th class="num">Bs / mes</th></tr></thead>
         <tbody>
-          <tr><td>Servidor del backend (5 vCPU, 9,7 GiB)</td><td class="num">360–450</td></tr>
-          <tr><td>Vercel (equipo, 2 asientos)</td><td class="num">480</td></tr>
+          <tr><td>Servidor del backend (5 vCPU, 9,7 GiB)</td><td class="num">120 <span class="pill dato">Real</span></td></tr>
+          <tr><td>Vercel, si hace falta el plan de equipo</td><td class="num">0–480</td></tr>
           <tr><td>Correo transaccional</td><td class="num">0–240</td></tr>
-          <tr><td>Dominios, respaldos y varios</td><td class="num">100–200</td></tr>
+          <tr><td>Dominios, respaldos y varios</td><td class="num">20–200</td></tr>
           <tr><td>Cadena: mantener vivo el contrato <span class="pill dato">Medido</span></td><td class="num">≈ 11</td></tr>
-          <tr class="total"><td><strong>Total</strong></td><td class="num"><strong>950–1.380</strong></td></tr>
+          <tr class="total"><td><strong>Total</strong></td><td class="num"><strong>150–1.050</strong></td></tr>
         </tbody>
       </table>
-      <p class="nota">El costo marginal de una bodega nueva es casi cero en infraestructura. El costo real es el soporte (2–4 h al mes por bodega) y la puesta en marcha.</p>
+      <p class="nota">Hoy se pagan <strong>Bs 240 al mes</strong> entre servidor y dominio: el resto todavía corre en planes sin cargo. El costo marginal de una bodega nueva es casi cero en infraestructura. El costo real es el soporte (2–4 h al mes por bodega) y la puesta en marcha.</p>
     </div>
     <div>
-      <div class="cifra" style="margin-bottom:16px"><b>2 bodegas</b><span>Una Bodega o dos Esencial pagan toda la infraestructura de la plataforma</span></div>
+      <div class="cifra" style="margin-bottom:16px"><b>1 bodega</b><span>Una sola suscripción Esencial ya paga toda la infraestructura que hoy se factura</span></div>
       <div class="cifra" style="margin-bottom:16px"><b>7 bodegas</b><span>Planes Esencial para cubrir infraestructura más un salario mínimo</span></div>
       <div class="caja oro">
         <h3>El riesgo cambiario, en su justa medida</h3>
@@ -1000,26 +1002,211 @@
   <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>26</span></div>
 </section>
 
-<!-- 27 · CIERRE -->
+<!-- 27 · RETORNO · LO PUESTO HASTA HOY -->
+<section class="slide" data-titulo="Retorno · Lo que llevamos puesto">
+  <p class="eyebrow">Retorno de la inversión y del esfuerzo · 1 de 5</p>
+  <h2><span class="num">25</span>Lo que llevamos puesto hasta hoy</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px; align-items:start">
+    <div>
+      <table class="compacta">
+        <caption>Dinero que de verdad salió del bolsillo, al 3 de noviembre de 2026</caption>
+        <thead><tr><th>En qué</th><th class="num">USD</th><th class="num">Bs</th></tr></thead>
+        <tbody>
+          <tr><td>Suscripción de Claude para construir el ERP (2 meses)</td><td class="num">200</td><td class="num">2.400</td></tr>
+          <tr><td>Servidor del backend (2 meses a $10)</td><td class="num">20</td><td class="num">240</td></tr>
+          <tr><td>Dominio <em>drinksonchain.com</em> (1 año)</td><td class="num">20</td><td class="num">240</td></tr>
+          <tr class="total"><td><strong>Total desembolsado</strong></td><td class="num"><strong>240</strong></td><td class="num"><strong>2.880</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="nota">Lo demás todavía no genera factura: la red de pruebas de Stellar no cuesta, el correo de pruebas corre en nuestro propio servidor y las páginas están publicadas sin cargo. Nadie cobró un sueldo.</p>
+    </div>
+    <div>
+      <p class="eyebrow" style="margin-bottom:8px">Y lo que no se pagó con plata</p>
+      <div class="cols c2" style="gap:14px">
+        <div class="cifra"><b>19</b><span>jornadas de trabajo registradas en el repositorio, varias de más de doce horas</span></div>
+        <div class="cifra"><b>1.154</b><span>cambios guardados entre el 28 de agosto y hoy</span></div>
+        <div class="cifra"><b>15</b><span>repositorios: cinco aplicaciones, el backend, el contrato y la documentación</span></div>
+        <div class="cifra"><b>5</b><span>sistemas publicados y funcionando: landing, bodegas, ERP, back office y marketplace</span></div>
+      </div>
+      <p class="nota">A eso hay que sumarle lo que no queda registrado: las reuniones de equipo, el viaje a Tarija, las conversaciones con cinco bodegas y toda la documentación comercial. Pasamos holgadamente las <strong>200 horas</strong>.</p>
+    </div>
+  </div>
+  <div class="glosario">
+    <span class="rotulo">Palabras y siglas de esta lámina</span>
+    <b>Repositorio:</b> la carpeta donde vive el código de un sistema, con todo su historial. · <b>Cambio guardado</b> (en inglés <em>commit</em>): cada vez que se guarda un avance con su fecha y su explicación; por eso podemos contar el trabajo sin estimarlo. · <b>Backend:</b> la parte que no se ve, donde están los datos y las reglas. · <b>Red de pruebas</b> (<em>testnet</em>): la copia de la red Stellar que sirve para ensayar sin usar dinero real.
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>27</span></div>
+</section>
+
+<!-- 28 · RETORNO · LO QUE FALTA PONER -->
+<section class="slide" data-titulo="Retorno · Lo que falta poner">
+  <p class="eyebrow">Retorno de la inversión y del esfuerzo · 2 de 5</p>
+  <h2><span class="num">26</span>Lo que falta poner hasta la primera factura</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px; align-items:start">
+    <div>
+      <table class="compacta">
+        <colgroup><col style="width:32%"><col style="width:16%"><col></colgroup>
+        <thead><tr><th>En qué</th><th class="num">Bs</th><th>Cómo sale el número</th></tr></thead>
+        <tbody>
+          <tr><td>Viaje del lanzamiento</td><td class="num"><strong>2.460</strong></td><td>3 personas, 2 noches: Bs 290 el hotel con desayuno y Bs 240 los pasajes ida y vuelta</td></tr>
+          <tr><td>Evento del 28 de noviembre</td><td class="num">3.200–7.050</td><td>Formato <em>sunset</em>, sin prensa paga, con los vinos y el servicio en especie</td></tr>
+          <tr><td>Servidor y dominio, diciembre a marzo</td><td class="num">500</td><td>$10 al mes</td></tr>
+          <tr><td>Suscripción de construcción, diciembre a marzo</td><td class="num">4.800</td><td>Si se mantiene el ritmo de desarrollo hasta el cierre del piloto</td></tr>
+          <tr class="total"><td><strong>Falta poner</strong></td><td class="num"><strong>11.000–15.000</strong></td><td>Antes de cobrar el primer peso</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="cifra" style="margin-bottom:14px"><b>Bs 17.000</b><span>es todo lo que habrá costado la empresa, en efectivo, el día que emita su primera factura (≈ $1.400; entre Bs 15.000 y 19.000 según cuánto cueste el evento)</span></div>
+      <div class="caja oro">
+        <h3>Por qué la primera factura recién llega en abril</h3>
+        <p>Porque está prometido: las bodegas fundadoras usan todo gratis <strong>hasta el 31 de marzo de 2027</strong>. Entre hoy y esa fecha solo sale plata. Es una decisión tomada, no un problema nuevo, pero manda sobre toda la línea de tiempo.</p>
+      </div>
+      <p class="nota">Ningún socio ha puesto ni cobrado un sueldo. El aporte del equipo es tiempo, y eso se discute en <strong>participación</strong> —con el techo del 17 % que fijamos—, no en una factura.</p>
+    </div>
+  </div>
+  <div class="glosario">
+    <span class="rotulo">Palabras de esta lámina</span>
+    <b>En especie:</b> aportado en productos o servicios en vez de dinero; los vinos y el personal de servicio los pone Daroca. · <b>Bodega fundadora:</b> las primeras cinco, que entran gratis hasta marzo y después pagan con un 40 % de descuento permanente. · <b>Participación:</b> el porcentaje de la empresa que le toca a cada uno.
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>28</span></div>
+</section>
+
+<!-- 29 · RETORNO · LÍNEA DE TIEMPO -->
+<section class="slide" data-titulo="Retorno · Cuándo se recupera">
+  <p class="eyebrow">Retorno de la inversión y del esfuerzo · 3 de 5 <span class="pill lleno">Proyección</span></p>
+  <h2><span class="num">27</span>Cuándo se recupera, en tres casos</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <caption>Plata acumulada en la caja, en bolivianos. En rojo lo que todavía se debe; la primera cifra en positivo es el día que se recuperó todo lo puesto.</caption>
+    <thead><tr><th>Momento</th><th class="num">Peor caso</th><th class="num">Caso medio</th><th class="num">Mejor caso</th><th>Qué está pasando</th></tr></thead>
+    <tbody>
+      <tr><td>Hoy · noviembre 2026</td><td class="num">−2.900</td><td class="num">−2.900</td><td class="num">−2.900</td><td>Lo gastado hasta ahora</td></tr>
+      <tr><td>Fin de 2026</td><td class="num">−13.000</td><td class="num">−13.000</td><td class="num">−13.000</td><td>Lanzamiento, viaje y evento del 28</td></tr>
+      <tr><td>Marzo 2027</td><td class="num">−17.000</td><td class="num">−12.900</td><td class="num">−6.600</td><td>Pilotos gratis; en los dos mejores casos ya hay bodegas pagando</td></tr>
+      <tr class="destaca"><td>Junio 2027</td><td class="num">−14.000</td><td class="num">−2.400</td><td class="num"><strong>+13.200</strong></td><td>Primeras facturas y primeras puestas en marcha</td></tr>
+      <tr class="destaca"><td>Septiembre 2027</td><td class="num">−8.000</td><td class="num"><strong>+29.600</strong></td><td class="num">+76.000</td><td>El marketplace empieza a aportar</td></tr>
+      <tr class="destaca"><td>Diciembre 2027</td><td class="num"><strong>+4.600</strong></td><td class="num">+85.000</td><td class="num">+203.000</td><td>Cierre del primer año de cobro</td></tr>
+      <tr class="total"><td><strong>Se recupera todo en</strong></td><td class="num"><strong>nov 2027</strong></td><td class="num"><strong>jul 2027</strong></td><td class="num"><strong>abr 2027</strong></td><td>Trece, nueve o seis meses después del lanzamiento</td></tr>
+      <tr><td>Bodegas a diciembre de 2027</td><td class="num">10</td><td class="num">20</td><td class="num">35</td><td>Las tres mezclas de la lámina 12</td></tr>
+    </tbody>
+  </table>
+  <p class="nota">Supuestos: costo propio de Bs 1.300 al mes hasta junio y Bs 1.500–1.800 después; las fundadoras entran a pagar en abril con 40 % de descuento; el marketplace aporta desde julio en el escenario base. <strong>Hasta el peor caso se recupera dentro del primer año de cobro</strong>, porque lo invertido es muy poco: no es que el negocio sea espectacular, es que arrancar costó Bs 17.000.</p>
+  <div class="glosario">
+    <span class="rotulo">Cómo se lee esta lámina</span>
+    <b>Plata acumulada en la caja:</b> todo lo que entró menos todo lo que salió desde el primer día, no el resultado de ese mes. · <b>Recuperar la inversión:</b> el momento en que esa suma vuelve a cero, es decir, cuando el proyecto devolvió cada peso que se le puso. · <b>Puesta en marcha:</b> el cobro de una sola vez por dejar a la bodega funcionando.
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>29</span></div>
+</section>
+
+<!-- 30 · RETORNO · DEL ESFUERZO -->
+<section class="slide" data-titulo="Retorno · Del esfuerzo">
+  <p class="eyebrow">Retorno de la inversión y del esfuerzo · 4 de 5</p>
+  <h2><span class="num">28</span>Qué devuelve cada peso y cada hora</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px; align-items:start">
+    <div>
+      <p class="eyebrow" style="margin-bottom:8px">Cuántas veces vuelve lo invertido, durante 2027</p>
+      <div class="cifra"><b>1 vez</b><span>Peor caso: el año deja Bs 17.600, casi exactamente lo que costó llegar</span></div>
+      <div class="barra"><i style="width:8%"></i></div>
+      <div class="cifra" style="margin-top:14px"><b>6 veces</b><span>Caso medio: Bs 98.000 contra Bs 17.000 puestos</span></div>
+      <div class="barra"><i style="width:46%"></i></div>
+      <div class="cifra" style="margin-top:14px"><b>13 veces</b><span>Mejor caso: Bs 216.000</span></div>
+      <div class="barra"><i style="width:100%"></i></div>
+    </div>
+    <div>
+      <div class="caja">
+        <h3>Cuándo el proyecto paga un sueldo</h3>
+        <p>Cuando lo que queda cada mes supera un salario mínimo (Bs 3.300): en el mejor caso desde <strong>abril de 2027</strong>, en el caso medio desde <strong>julio</strong> y en el peor recién en <strong>diciembre</strong>. Ese es el verdadero hito: no recuperar la plata, sino poder pagarle a alguien.</p>
+      </div>
+      <div class="caja oro" style="margin-top:14px">
+        <h3>El esfuerzo no entra en esta cuenta, y es a propósito</h3>
+        <p>Las más de 200 horas no se facturan ni se descuentan: se convierten en <strong>participación</strong>. Ponerles un precio por hora solo serviría para inflar la inversión y para que alguien quiera comprarla barata. El techo del <strong>17 %</strong> que acordamos es la forma correcta de valorarlas.</p>
+      </div>
+      <p class="nota">Dicho en una línea: el riesgo de este proyecto no es la plata, son los meses. Lo que está en juego hasta abril de 2027 son Bs 17.000 y el tiempo de tres personas.</p>
+    </div>
+  </div>
+  <div class="glosario">
+    <span class="rotulo">Palabras de esta lámina</span>
+    <b>Salario mínimo:</b> Bs 3.300 al mes en Bolivia (decreto 5516). · <b>Participación:</b> el porcentaje de la empresa de cada socio. · <b>Techo del 17 %:</b> lo máximo que el equipo acordó ceder a un inversor.
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>30</span></div>
+</section>
+
+<!-- 31 · RETORNO · A QUÉ DINERO APUNTAR -->
+<section class="slide" data-titulo="Retorno · A qué dinero apuntar">
+  <p class="eyebrow">Retorno de la inversión y del esfuerzo · 5 de 5</p>
+  <h2><span class="num">29</span>A qué dinero podemos apuntar</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <colgroup><col style="width:24%"><col style="width:20%"><col></colgroup>
+    <thead><tr><th>Fuente</th><th class="num">Cuánto</th><th>Qué pide y por qué nos sirve</th></tr></thead>
+    <tbody>
+      <tr class="destaca">
+        <td><strong>Stellar Community Fund · Build</strong> <span class="pill">Primero esto</span></td>
+        <td class="num"><strong>hasta $150.000</strong><br><span class="fuente">en XLM, por tramos</span></td>
+        <td>No se cede nada de la empresa. Paga por etapas —aprobación, prototipo, red de pruebas y red real— y nosotros ya tenemos las dos primeras. <strong>La ronda #46 cierra el 9 de noviembre</strong>; el formulario de interés se manda antes. <span class="pill dato">Sitio oficial</span></td>
+      </tr>
+      <tr>
+        <td><strong>Stellar · Instaward</strong></td>
+        <td class="num">hasta $15.000<br><span class="fuente">lo habitual ronda $5.000</span></td>
+        <td>Premio chico y rápido para un desarrollo acotado, sin ceder nada. Sirve para financiar el certificado por botella mientras se arma la postulación grande</td>
+      </tr>
+      <tr>
+        <td>Auditoría técnica del programa de Stellar</td>
+        <td class="num">sin costo</td>
+        <td>Viene con el premio: nos revisarían el contrato antes de pasarlo a la red real, que es exactamente lo que no podemos pagar hoy</td>
+      </tr>
+      <tr>
+        <td>Programas locales y Start-Up Chile</td>
+        <td class="num">a confirmar</td>
+        <td>Sin ceder participación. Start-Up Chile exige presencia en Chile; los locales, facturación en Bolivia</td>
+      </tr>
+      <tr>
+        <td>Platanus Ventures</td>
+        <td class="num">$200.000<br><span class="fuente">por ≈ 7 %</span></td>
+        <td>Entra dentro del techo del 17 %, pero implica valorar hoy la empresa en ≈ $2,9 millones. Solo tiene sentido con bodegas pagando <span class="pill">A verificar en su sitio</span></td>
+      </tr>
+      <tr>
+        <td>Universidad Católica de Tarija</td>
+        <td class="num">convenio</td>
+        <td>No es efectivo: son datos, estudiantes y sede. Es lo que hace viable la fase 3 sin contratar a nadie</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caja oro" style="margin-top:14px">
+    <p><strong>El orden importa:</strong> primero el dinero que no diluye, y recién con bodegas pagando se habla con un fondo. Con Bs 17.000 invertidos, aceptar hoy una valoración nos saldría carísimo. <strong>Decisión de esta semana:</strong> quién arma la postulación al SCF #46 antes del 9 de noviembre.</p>
+  </div>
+  <div class="glosario">
+    <span class="rotulo">Palabras y siglas de esta lámina</span>
+    <b>XLM:</b> la moneda de la red Stellar; el premio se paga en ella y su precio se mueve. · <b>Por tramos</b> (<em>tranches</em>): el dinero llega en partes, a medida que se cumplen etapas. · <b>Prototipo</b> (<em>MVP</em>): la primera versión que ya funciona. · <b>Red real</b> (<em>mainnet</em>): la red Stellar de verdad, con valor económico, frente a la de pruebas. · <b>Diluir:</b> entregar un porcentaje de la empresa a cambio de dinero. · <b>Valoración:</b> cuánto se considera que vale la empresa entera al momento de ese trato.
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>31</span></div>
+</section>
+
+<!-- 32 · CIERRE -->
 <section class="slide" data-titulo="Cierre y fuentes">
   <p class="eyebrow">Para cerrar</p>
-  <h2><span class="num">25</span>Lo que sale de esta reunión</h2>
+  <h2><span class="num">30</span>Lo que sale de esta reunión</h2>
   <hr class="regla">
-  <div class="cols c4" style="margin-bottom:20px">
+  <div class="cols" style="grid-template-columns:repeat(5,1fr); margin-bottom:20px">
     <div class="cifra"><b>1</b><span>Lista de cuatro planes aprobada y, si se decide, publicada</span></div>
     <div class="cifra"><b>2</b><span>Número de licencias gratuitas hasta el 31 de marzo</span></div>
     <div class="cifra"><b>3</b><span>Los dos complementos salen como propuesta a validar</span></div>
     <div class="cifra"><b>4</b><span>Esquema de comisión del comercial de Tarija</span></div>
+    <div class="cifra"><b>5</b><span>Quién arma la postulación al fondo de Stellar antes del 9 de noviembre</span></div>
   </div>
   <div class="caja" style="border-color:var(--oro)">
     <p><strong>Y una fecha que manda sobre todas:</strong> el ERP tiene que estar operativo en producción el <strong>sábado 7 de noviembre</strong> para poder viajar el 8. Un precio sin producto es una conversación que no se puede sostener el 28.</p>
   </div>
   <hr class="regla" style="margin-top:22px">
   <p class="fuente" style="line-height:1.5">
-    <strong>Fuentes del benchmarking:</strong> evins.io · Capterra, GetApp e itQlick (Vintrace, InnoVint) · Cepaos y softwaredoit (España) · fidewine.com · registro.wine · e-label.online · e-label.eu · myproductpassport.eu · FourWeekMBA y FATbit (Vivino) · BCP y PagosYa (QR Simple) · rodrifer.dev (pasarelas) · KELUA (Perú) · cifraHQ (Panamá) · versat.ag · ANIV vía eju.tv y El Andaluz (precio de la botella y tributo) · Unitel (salario mínimo, DS 5516) · Red Uno (tipo de cambio) · Publiagro y Tim Atkin (producción de Tarija) · El Deber (Ruta del Vino) · stellar.org y Medium (SCF) · ecosistemastartup (Platanus).
+    <strong>Fuentes del benchmarking:</strong> evins.io · Capterra, GetApp e itQlick (Vintrace, InnoVint) · Cepaos y softwaredoit (España) · fidewine.com · registro.wine · e-label.online · e-label.eu · myproductpassport.eu · FourWeekMBA y FATbit (Vivino) · BCP y PagosYa (QR Simple) · rodrifer.dev (pasarelas) · KELUA (Perú) · cifraHQ (Panamá) · versat.ag · ANIV vía eju.tv y El Andaluz (precio de la botella y tributo) · Unitel (salario mínimo, DS 5516) · Red Uno (tipo de cambio) · Publiagro y Tim Atkin (producción de Tarija) · El Deber (Ruta del Vino) · communityfund.stellar.org (ronda #46 y tramos del premio) · Messari, <em>State of Stellar</em> (tope de los Instawards) · ecosistemastartup (Platanus).
     <strong>Fuentes propias:</strong> <em>drinks-on-chain-contracts/docs/costes.md</em> (costos medidos en la cadena) · <em>comercial/daroca/</em> (condiciones ya comprometidas) · <em>plan/analisis-piloto-real.md</em> (estado del sistema).
   </p>
-  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>27</span></div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>32</span></div>
 </section>
 
 </div><!-- /stage -->
