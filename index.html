@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Modelo de precios · Drinks on Chain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --papel:#fdfcf5;
+    --tinta:#2b2a26;
+    --tinta-suave:#55544d;
+    --oro:#a8842c;
+    --oro-hondo:#7d6220;
+    --linea:#ddd7c4;
+    --crema:#faf8ee;
+    --fondo:#e9e5d8;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; }
+  body{
+    background:var(--fondo);
+    color:var(--tinta);
+    font-family:"EB Garamond",Georgia,"Times New Roman",serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.wordmark,.cifra b{ font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; }
+
+  /* ---------- escenario ---------- */
+  .deck{ position:fixed; inset:0; overflow:hidden; }
+  .stage{
+    width:1280px; height:720px;
+    background:var(--papel);
+    position:absolute; left:50%; top:50%; overflow:hidden;
+    box-shadow:0 3px 46px rgba(43,42,38,.20);
+    transform-origin:center center;
+  }
+  .slide{
+    position:absolute; inset:0;
+    padding:46px 64px 58px;
+    display:none; flex-direction:column;
+  }
+  .slide.is-active{ display:flex; }
+  @media (prefers-reduced-motion:no-preference){
+    .slide.is-active{ animation:entra .26s ease-out both; }
+    @keyframes entra{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+  }
+
+  /* ---------- tipografía común ---------- */
+  .eyebrow{
+    font-size:10.5px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--oro-hondo); margin:0 0 7px; font-weight:500;
+  }
+  h2{ font-size:33px; line-height:1.08; margin:0; letter-spacing:.005em; }
+  h2 .num{ color:var(--oro); font-style:italic; font-size:27px; margin-right:7px; }
+  .regla{ border:0; border-top:1px solid var(--oro); margin:13px 0 17px; }
+  .lead{ font-size:16.5px; color:var(--tinta-suave); margin:0 0 14px; max-width:94ch; line-height:1.42; }
+  .slide > *:last-child{ margin-bottom:0; }
+  .cuerpo{ margin-top:auto; margin-bottom:auto; }
+  .cuerpo > *:last-child{ margin-bottom:0; }
+  strong{ font-weight:600; }
+  em{ color:var(--tinta-suave); }
+  .nota{ font-size:13px; color:var(--tinta-suave); font-style:italic; line-height:1.45; margin:11px 0 0; }
+  .pie-slide{
+    position:absolute; left:64px; right:64px; bottom:22px;
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:10px; color:var(--tinta-suave);
+    border-top:1px solid var(--linea); padding-top:7px;
+  }
+  .pie-slide .wordmark{ letter-spacing:.2em; text-transform:uppercase; color:var(--oro-hondo); font-size:9.5px; }
+
+  /* ---------- etiquetas ---------- */
+  .pill{
+    display:inline-block; vertical-align:middle;
+    font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+    border:1px solid var(--oro); color:var(--oro-hondo);
+    padding:2px 7px; border-radius:2px; margin-left:8px; font-weight:500;
+    white-space:nowrap;
+  }
+  .pill.dato{ border-color:#5c7a4e; color:#466038; }
+  .pill.lleno{ background:var(--oro-hondo); color:#fff; border-color:var(--oro-hondo); }
+
+  /* ---------- tablas ---------- */
+  table{ width:100%; border-collapse:collapse; font-size:15px; }
+  caption{ caption-side:top; text-align:left; font-size:12px; color:var(--tinta-suave); padding-bottom:6px; font-style:italic; }
+  th,td{ text-align:left; vertical-align:top; padding:6.5px 10px 6.5px 0; border-bottom:1px solid var(--linea); }
+  thead th{
+    font-weight:500; color:var(--oro-hondo); font-size:9.5px;
+    letter-spacing:.13em; text-transform:uppercase; border-bottom:1px solid var(--oro);
+    padding-bottom:5px;
+  }
+  tbody tr:last-child td{ border-bottom:0; }
+  td.num, th.num{ text-align:right; padding-right:0; font-variant-numeric:tabular-nums; }
+  tr.total td{ border-top:1px solid var(--oro); border-bottom:0; font-weight:600; }
+  tr.destaca td{ background:var(--crema); }
+  table.compacta{ font-size:13.5px; }
+  table.compacta th, table.compacta td{ padding:5px 8px 5px 0; }
+  .fuente{ font-size:11px; color:var(--tinta-suave); font-style:italic; }
+  .plan-nombre{ font-weight:600; font-family:"Cormorant Garamond",Georgia,serif; font-size:19px; }
+
+  /* ---------- rejillas y cajas ---------- */
+  .cols{ display:grid; gap:20px; }
+  .c2{ grid-template-columns:1fr 1fr; }
+  .c3{ grid-template-columns:repeat(3,1fr); }
+  .c4{ grid-template-columns:repeat(4,1fr); }
+  .caja{
+    border:1px solid var(--linea); background:var(--crema);
+    padding:13px 15px; font-size:14.5px; line-height:1.45;
+  }
+  .caja h3{ margin:0 0 5px; font-size:17px; }
+  .caja.oro{ border-color:var(--oro); }
+  .caja p{ margin:0; color:var(--tinta-suave); }
+  .cifra{ text-align:left; }
+  .cifra b{ display:block; font-size:38px; line-height:1.05; color:var(--oro-hondo); font-weight:600; }
+  .cifra span{ display:block; font-size:13px; color:var(--tinta-suave); margin-top:3px; line-height:1.35; }
+  ol.puntos, ul.puntos{ margin:0; padding:0; list-style:none; }
+  ol.puntos{ counter-reset:p; }
+  ol.puntos > li{ counter-increment:p; position:relative; padding-left:26px; margin-bottom:9px; font-size:15.5px; line-height:1.42; }
+  ol.puntos > li::before{
+    content:counter(p); position:absolute; left:0; top:-2px;
+    font-family:"Cormorant Garamond",Georgia,serif; font-size:21px; color:var(--oro);
+  }
+  ul.puntos > li{ position:relative; padding-left:17px; margin-bottom:7px; font-size:15px; line-height:1.4; }
+  ul.puntos > li::before{ content:"·"; position:absolute; left:4px; color:var(--oro); font-size:19px; top:-3px; }
+  .barra{ height:9px; background:var(--linea); position:relative; margin:4px 0 2px; }
+  .barra i{ position:absolute; inset:0 auto 0 0; background:var(--oro); display:block; }
+  .barra.suave i{ background:var(--linea); border:1px solid var(--oro); }
+
+  /* ---------- portada ---------- */
+  .portada{ justify-content:center; padding:0 90px; }
+  .logo{
+    width:300px; height:85px;
+    background-image:url("marca/drinks-on-chain-logotipo-transparente.png");
+    background-repeat:no-repeat;
+    background-size:363px auto;      /* 300 * 1024/845 */
+    background-position:-32px -137px; /* -300*0.1065 , -300*0.4556 */
+    margin-bottom:26px;
+  }
+  .portada h1{ font-size:56px; line-height:1.04; margin:0; }
+  .portada h1 .amp{ color:var(--oro); font-style:italic; }
+  .portada .sub{ font-size:19px; color:var(--tinta-suave); margin:16px 0 0; max-width:70ch; line-height:1.4; }
+  .portada .meta{ margin-top:30px; padding-top:13px; border-top:1px solid var(--oro); font-size:13px; color:var(--tinta-suave); display:flex; gap:34px; }
+  .portada .meta b{ color:var(--tinta); font-weight:600; display:block; font-size:14px; }
+
+  /* ---------- navegación ---------- */
+  .nav{
+    position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:9px;
+    background:rgba(253,252,245,.94); border:1px solid var(--linea);
+    padding:5px 9px; border-radius:3px; box-shadow:0 1px 10px rgba(43,42,38,.12);
+    font-size:12px; color:var(--tinta-suave); z-index:10;
+  }
+  .nav button{
+    font-family:inherit; font-size:14px; line-height:1;
+    background:transparent; border:1px solid var(--linea); color:var(--tinta);
+    padding:5px 10px; cursor:pointer; border-radius:2px;
+  }
+  .nav button:hover{ border-color:var(--oro); color:var(--oro-hondo); }
+  .nav button:focus-visible, .nav select:focus-visible{ outline:2px solid var(--oro); outline-offset:2px; }
+  .nav .cuenta{ font-variant-numeric:tabular-nums; min-width:52px; text-align:center; }
+  .nav select{
+    font-family:inherit; font-size:12px; max-width:230px;
+    border:1px solid var(--linea); background:transparent; color:var(--tinta-suave); padding:5px 6px; border-radius:2px;
+  }
+
+  /* ---------- impresión ---------- */
+  @page{ size:1280px 720px; margin:0; }
+  @media print{
+    body{ background:#fff; }
+    .deck{ position:static; display:block; overflow:visible; }
+    .stage{ position:static; transform:none !important; box-shadow:none; width:1280px; height:720px; overflow:visible; }
+    .slide{ display:flex !important; position:relative; page-break-after:always; break-after:page; width:1280px; height:720px; animation:none; }
+    .nav{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+<div class="stage" id="stage">
+
+<!-- 1 · PORTADA -->
+<section class="slide portada is-active" data-titulo="Portada">
+  <div class="logo" role="img" aria-label="Drinks on Chain"></div>
+  <h1>Modelo de precios <span class="amp">&amp;</span><br>monetización por etapa</h1>
+  <p class="sub">Qué cobramos, cuánto, por qué concepto y en qué momento. Con el benchmarking de lo que cobra el mercado y los números de nuestra propia operación.</p>
+  <div class="meta">
+    <div><b>04 de noviembre de 2026</b>Reunión de socios</div>
+    <div><b>Documento interno</b>Para decidir, no para publicar</div>
+    <div><b>Bs 12 por dólar</b>TCO del BCB, 03-11-2026</div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>1</span></div>
+</section>
+
+<!-- 2 · CÓMO ESTÁ ARMADO -->
+<section class="slide" data-titulo="Cómo está armado">
+  <p class="eyebrow">Guía rápida</p>
+  <h2>Qué vamos a ver y qué hay que decidir</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px">
+    <div>
+      <table class="compacta">
+        <tbody>
+          <tr><td style="width:34px; color:var(--oro-hondo)">3–4</td><td><strong>La hoja de precios</strong> y las decisiones de hoy</td></tr>
+          <tr><td style="color:var(--oro-hondo)">5–9</td><td><strong>Por qué estos números</strong>: principios, ancla boliviana y benchmarking</td></tr>
+          <tr><td style="color:var(--oro-hondo)">10–14</td><td><strong>Fase 1 · ERP</strong>: planes, descuentos, complementos y escenarios</td></tr>
+          <tr><td style="color:var(--oro-hondo)">15–19</td><td><strong>Fase 2 · Marketplace</strong>: cómo se monetiza y proyecciones</td></tr>
+          <tr><td style="color:var(--oro-hondo)">20</td><td><strong>Fase 3 · Investigación</strong>: pendiente de benchmarking</td></tr>
+          <tr><td style="color:var(--oro-hondo)">21–25</td><td>Canal, costos propios, riesgos y cierre</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="caja oro">
+      <h3>Tres marcas que verás en las láminas</h3>
+      <p style="margin-bottom:9px"><span class="pill dato" style="margin-left:0">Dato</span> &nbsp;Cifra verificada, con fuente al pie.</p>
+      <p style="margin-bottom:9px"><span class="pill" style="margin-left:0">Propuesta</span> &nbsp;Precio que proponemos pero que todavía no está validado con una bodega. Se puede mover hoy.</p>
+      <p><span class="pill lleno" style="margin-left:0">Proyección</span> &nbsp;Número construido con supuestos explícitos. No es una promesa.</p>
+    </div>
+  </div>
+  <p class="nota">La fase 4 (mercado de valores tokenizado) queda fuera de esta conversación: es de largo plazo y no se cotiza todavía.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>2</span></div>
+</section>
+
+<!-- 3 · LAS DECISIONES -->
+<section class="slide" data-titulo="Las decisiones de hoy">
+  <p class="eyebrow">Lo que no puede salir sin respuesta</p>
+  <h2><span class="num">01</span>Las cuatro decisiones de hoy</h2>
+  <hr class="regla">
+  <ol class="puntos" style="font-size:16px">
+    <li><strong>¿Se aprueba la lista de cuatro planes?</strong> Si se aprueba, se publica en la web: en este sector <em>nadie</em> publica precios, y hacerlo nos distingue sin costo.</li>
+    <li><strong>¿Cuántas licencias gratuitas hasta el 31 de marzo?</strong> Recomendado: <strong>3</strong> (Daroca y dos más). De la cuarta en adelante se cobra, con precio de fundador. Es la decisión que más mueve la caja de los próximos seis meses.</li>
+    <li><strong>¿Los dos complementos salen como propuesta?</strong> El certificado por botella y el pack de exportación son precios que nadie ha puesto en Bolivia; conviene validarlos con la primera bodega antes de publicarlos.</li>
+    <li><strong>¿Cómo se le paga al comercial de Tarija?</strong> Los $7 por bodega cerrada son el <strong>1 %</strong> del primer año de un contrato Esencial. Propuesta: Bs 400 por activación más 5 % de lo cobrado en doce meses.</li>
+  </ol>
+  <div class="caja" style="margin-top:16px">
+    <p><strong>Lo que no hace falta cerrar hoy:</strong> las comisiones del marketplace (no se lanza hasta febrero y falta la negociación de flete internacional) y el módulo de investigación, que primero necesita su propio benchmarking.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>3</span></div>
+</section>
+
+<!-- 4 · LA HOJA DE PRECIOS -->
+<section class="slide" data-titulo="La hoja de precios">
+  <p class="eyebrow">Fase 1 · ERP de trazabilidad</p>
+  <h2><span class="num">02</span>La hoja de precios</h2>
+  <hr class="regla">
+  <table>
+    <thead>
+      <tr>
+        <th>Plan</th><th>Botellas al año</th>
+        <th class="num">Bs / mes</th><th class="num">Pago anual (10 meses)</th>
+        <th class="num">Equivale por botella</th><th class="num">% de su facturación</th><th class="num">USD / mes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="plan-nombre">Lote</td><td>hasta 10.000</td><td class="num"><strong>290</strong></td><td class="num">2.900</td><td class="num">Bs 0,35</td><td class="num">1,9 %</td><td class="num">$24</td></tr>
+      <tr class="destaca"><td class="plan-nombre">Esencial</td><td>hasta 40.000</td><td class="num"><strong>690</strong></td><td class="num">6.900</td><td class="num">Bs 0,21</td><td class="num">1,2 %</td><td class="num">$58</td></tr>
+      <tr><td class="plan-nombre">Bodega</td><td>hasta 150.000</td><td class="num"><strong>1.490</strong></td><td class="num">14.900</td><td class="num">Bs 0,12</td><td class="num">0,7 %</td><td class="num">$124</td></tr>
+      <tr><td class="plan-nombre">Valle</td><td>hasta 500.000</td><td class="num"><strong>2.900</strong></td><td class="num">29.000</td><td class="num">Bs 0,07</td><td class="num">0,4 %</td><td class="num">$242</td></tr>
+      <tr><td class="plan-nombre">Grupo</td><td>más de 500.000 o varias bodegas</td><td class="num"><strong>desde 4.900</strong></td><td class="num">a convenir</td><td class="num">—</td><td class="num">—</td><td class="num">desde $408</td></tr>
+    </tbody>
+  </table>
+  <div class="cols c3" style="margin-top:18px">
+    <div class="caja"><h3>Usuarios ilimitados</h3><p>Nunca se cobra por persona. Es lo que prometimos por escrito a Daroca y lo que hace que el dato de trazabilidad quede completo.</p></div>
+    <div class="caja"><h3>Sin permanencia</h3><p>Baja con 30 días de aviso y los datos se exportan. El cliente se queda porque quiere, no porque está amarrado.</p></div>
+    <div class="caja oro"><h3>Fundador: −40 % de por vida</h3><p>Para las primeras <strong>5</strong> bodegas aliadas, sobre la lista vigente de su plan. Daroca: Bs 0 hasta el 31-03-2027 y después Bs 894 en el plan Bodega.</p></div>
+  </div>
+  <p class="nota">El tramo lo define el embotellado declarado del año anterior, no la capacidad instalada. El % de facturación se calcula con la botella a Bs 18, precio de mercado interno según la ANIV.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>4</span></div>
+</section>
+
+<!-- 5 · PRINCIPIOS -->
+<section class="slide" data-titulo="Los cinco principios">
+  <p class="eyebrow">Las reglas detrás de cada número</p>
+  <h2><span class="num">03</span>Cinco principios que no se negocian</h2>
+  <hr class="regla">
+  <ol class="puntos">
+    <li><strong>Se cobra por bodega y por botellas, nunca por usuario.</strong> Ya está prometido y además es lo que hace el mercado: evins, en España, cobra por litros producidos. Nadie deja de usar el sistema para ahorrarse una licencia.</li>
+    <li><strong>El precio se publica, en bolivianos.</strong> Vintrace, InnoVint, Vintegrate e ISAGRI venden solo por cotización. Una bodega del valle desconfía de quien no dice el precio.</li>
+    <li><strong>Nunca más del 2 % de la facturación de la bodega.</strong> Es el techo que hace que la decisión no suba al dueño cada mes.</li>
+    <li><strong>Gratis lo que vende, se cobra lo que opera.</strong> El pasaporte público de cada botella y el directorio de bodegas no se cobran nunca: son el marketing. Se cobra el ERP, el certificado, la exportación y el dato.</li>
+    <li><strong>Sin permanencia y con los datos siempre exportables.</strong> Es una ventaja real frente a cualquier ERP instalado, y sostiene el precio: el cliente puede irse y aun así se queda.</li>
+  </ol>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>5</span></div>
+</section>
+
+<!-- 6 · EL ANCLA BOLIVIANA -->
+<section class="slide" data-titulo="El ancla boliviana">
+  <p class="eyebrow">Lo que de verdad limita el precio <span class="pill dato">Datos</span></p>
+  <h2><span class="num">04</span>El techo lo pone la botella, no el competidor</h2>
+  <hr class="regla">
+  <div class="cols c4" style="margin-bottom:18px">
+    <div class="cifra"><b>Bs 15–18</b><span>Precio de una botella en el mercado interno (ANIV, 02-2026)</span></div>
+    <div class="cifra"><b>Bs 3,70</b><span>Tributo que ya paga la bodega por cada botella vendida</span></div>
+    <div class="cifra"><b>Bs 3.300</b><span>Salario mínimo nacional 2026 (DS 5516)</span></div>
+    <div class="cifra"><b>21 M</b><span>Botellas al año equivalentes en Tarija: 16 M de litros de vino y 5 M de singani</span></div>
+  </div>
+  <div class="cols c2">
+    <div class="caja">
+      <h3>Lo que esto descarta</h3>
+      <p>FIDEwine cobra <strong>hasta 1 €/botella al año</strong> por el pasaporte digital. Sobre una botella de Bs 15–18 eso sería el <strong>70 % del precio de venta</strong>. Los precios europeos no se traducen: se recalculan.</p>
+    </div>
+    <div class="caja oro">
+      <h3>Lo que esto nos da</h3>
+      <p>El mejor comparador del mundo para vender: <strong>«el sistema le cuesta menos de lo que paga de impuesto por una sola botella»</strong>. En el plan Esencial, 21 centavos por botella frente a Bs 3,70 de tributo.</p>
+    </div>
+  </div>
+  <p class="nota">El universo también manda prudencia: la Ruta del Vino agrupa 25 empresas y las 54 fincas identificadas son en buena parte viñedos, no bodegas con sala de proceso. Un plan que dependa de 57 suscripciones no es prudente; uno de 15 a 25 bodegas más el valor por botella, sí.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>6</span></div>
+</section>
+
+<!-- 7 · BENCHMARKING SOFTWARE -->
+<section class="slide" data-titulo="Benchmarking · software de bodega">
+  <p class="eyebrow">Benchmarking 1 de 3 · el competidor directo</p>
+  <h2><span class="num">05</span>Qué cobra el software de bodega</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <thead><tr><th>Producto</th><th class="num">Precio publicado</th><th>Por qué concepto</th></tr></thead>
+    <tbody>
+      <tr><td><strong>evins</strong> · España</td><td class="num">desde <strong>40 €/mes</strong> (≈ Bs 520)</td><td><strong>Por litros producidos al año</strong></td></tr>
+      <tr><td><strong>GesBodega / Clavei</strong> · España</td><td class="num">desde ~60 €/mes</td><td>Suscripción por uso, presupuesto a medida</td></tr>
+      <tr class="destaca"><td><strong>Vintrace</strong> · líder mundial</td><td class="num"><strong>$95–159/mes</strong> de entrada; hasta $700</td><td>Tamaño de bodega y usuarios; onboarding aparte</td></tr>
+      <tr><td><strong>InnoVint</strong> · Estados Unidos</td><td class="num">$95–149/mes; onboarding desde <strong>$500</strong></td><td>Cuatro ediciones, precio a medida</td></tr>
+      <tr><td>SaaS vinícola para pyme (rango general)</td><td class="num">100–500 €/mes</td><td>Volumen y módulos</td></tr>
+      <tr><td>ERP corporativo con módulo de bodega</td><td class="num">500–2.000 €/mes</td><td>Licencia más módulos</td></tr>
+    </tbody>
+  </table>
+  <div class="cols c3" style="margin-top:17px">
+    <div class="caja"><h3>Cobran por volumen</h3><p>El mercado ya aceptó cobrar por producción y no por usuario: nuestra promesa coincide con el estándar.</p></div>
+    <div class="caja"><h3>La entrada son $95–160</h3><p>Y eso es para una bodega española o estadounidense. Nuestro Esencial son $58.</p></div>
+    <div class="caja oro"><h3>Nadie publica precios</h3><p>Vintrace, InnoVint, Vintegrate e ISAGRI venden solo por cotización. Publicar los nuestros es ventaja competitiva gratis.</p></div>
+  </div>
+  <p class="fuente" style="margin-top:12px">Fuentes: evins.io · Capterra e itQlick (Vintrace) · GetApp y Capterra (InnoVint) · Cepaos · softwaredoit.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>7</span></div>
+</section>
+
+<!-- 8 · BENCHMARKING PASAPORTE -->
+<section class="slide" data-titulo="Benchmarking · pasaporte digital">
+  <p class="eyebrow">Benchmarking 2 de 3 · nuestro diferenciador</p>
+  <h2><span class="num">06</span>Qué cobra el pasaporte digital y la e-label</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <thead><tr><th>Producto</th><th class="num">Precio publicado</th><th>Concepto</th></tr></thead>
+    <tbody>
+      <tr class="destaca"><td><strong>FIDEwine</strong> · pasaporte digital con blockchain</td><td class="num">de céntimos hasta <strong>1 €/botella/año</strong></td><td>Por botella, con descuento por volumen y sin comisión sobre ventas</td></tr>
+      <tr><td><strong>Registro.wine</strong></td><td class="num">150 €/año (15 etiquetas) a 650 €/año (1.000)</td><td>Paquete anual de etiquetas</td></tr>
+      <tr><td><strong>e-label.online</strong></td><td class="num">60 € por 20 etiquetas (≈ 3 €/etiqueta), hasta 700 €</td><td>Paquete anual</td></tr>
+      <tr><td><strong>e-label.eu</strong> (IMERO)</td><td class="num">gratis hasta 3; 90 €/año por 5 nuevas</td><td>Por etiqueta y año</td></tr>
+      <tr><td><strong>MyProductPassport</strong></td><td class="num">119 £/año hasta 100 etiquetas</td><td>Por etiqueta y año</td></tr>
+      <tr><td>Montar un sistema blockchain propio</td><td class="num">≈ 10.000 € de inicio</td><td>Señalado como barrera para productores pequeños</td></tr>
+    </tbody>
+  </table>
+  <div class="cols c2" style="margin-top:17px">
+    <div class="caja oro">
+      <h3>La lectura comercial</h3>
+      <p>Europa cobra <strong>hasta 1 €/botella al año</strong> por lo que nosotros ya tenemos construido, y entre 90 y 650 € al año por una página pública con un QR. Nuestra propuesta de <strong>Bs 0,30 por botella</strong> es el <strong>2 %</strong> de ese precio.</p>
+    </div>
+    <div class="caja">
+      <h3>Y lo que nos cuesta <span class="pill dato" style="margin-left:4px">Medido</span></h3>
+      <p>Emitir un lote en la cadena: <strong>≈ 0,14 XLM</strong>, igual si son 3 botellas que si son 1.000. Mantener vivo el contrato: <strong>≈ 74 XLM al año</strong> para toda la plataforma. Entregar y quemar una botella: Bs 0,07–0,13.</p>
+    </div>
+  </div>
+  <p class="fuente" style="margin-top:12px">Fuentes: fidewine.com · registro.wine · e-label.online · e-label.eu · myproductpassport.eu · ScienceDirect 2025 · medición propia en <em>drinks-on-chain-contracts/docs/costes.md</em>.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>8</span></div>
+</section>
+
+<!-- 9 · BENCHMARKING MARKETPLACE Y ERP REGIONAL -->
+<section class="slide" data-titulo="Benchmarking · comisiones y ERP regional">
+  <p class="eyebrow">Benchmarking 3 de 3 · comisiones y referencia regional</p>
+  <h2><span class="num">07</span>Comisiones de marketplace y ERP en la región</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px">
+    <div>
+      <table class="compacta">
+        <caption>Comisiones de marketplace de vino</caption>
+        <thead><tr><th>Plataforma</th><th class="num">Comisión</th></tr></thead>
+        <tbody>
+          <tr class="destaca"><td><strong>Vivino Market</strong></td><td class="num">≈ 15 %</td></tr>
+          <tr><td>Vivino Checkout</td><td class="num">≈ 10 %</td></tr>
+          <tr><td>Rango negociado reportado</td><td class="num">10–20 %</td></tr>
+          <tr><td>FIDEwine</td><td class="num">0 % (no vende)</td></tr>
+        </tbody>
+      </table>
+      <table class="compacta" style="margin-top:16px">
+        <caption>Cobro en Bolivia</caption>
+        <thead><tr><th>Medio</th><th class="num">Comisión</th></tr></thead>
+        <tbody>
+          <tr class="destaca"><td><strong>QR Simple</strong> (bancos ASOBAN)</td><td class="num"><strong>0 %</strong></td></tr>
+          <tr><td>Tarjeta en e-commerce</td><td class="num">2,5–3,5 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="compacta">
+        <caption>Lo que paga una bodega por un ERP en la región</caption>
+        <thead><tr><th>Mercado</th><th class="num">Precio</th></tr></thead>
+        <tbody>
+          <tr><td>ERP global por suscripción (Perú)</td><td class="num">$25–76 por usuario/mes</td></tr>
+          <tr><td>ERP local en la nube (Perú)</td><td class="num">S/ 99–600/mes</td></tr>
+          <tr><td>ERP en la nube (Panamá)</td><td class="num">B/. 45–95 por usuario/mes</td></tr>
+          <tr><td>Implantación (Panamá, 5–15 usuarios)</td><td class="num">B/. 4.500–12.000</td></tr>
+          <tr><td>ERP agro (Versat)</td><td class="num">$200/mes + $20 por usuario</td></tr>
+        </tbody>
+      </table>
+      <div class="caja oro" style="margin-top:16px">
+        <h3>El argumento de venta que sale de aquí</h3>
+        <p>Una bodega con cinco personas paga <strong>$100–380 al mes</strong> por un ERP regional que <em>no</em> hace trazabilidad ni pasaporte. El nuestro, con quince personas adentro, sigue costando lo mismo.</p>
+      </div>
+    </div>
+  </div>
+  <p class="fuente" style="margin-top:12px">Fuentes: FourWeekMBA y FATbit (Vivino) · BCP y PagosYa (QR) · rodrifer.dev (tarjeta) · KELUA (Perú) · cifraHQ (Panamá) · versat.ag.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>9</span></div>
+</section>
+
+<!-- 10 · QUÉ INCLUYE CADA PLAN -->
+<section class="slide" data-titulo="Fase 1 · Qué incluye cada plan">
+  <p class="eyebrow">Fase 1 · ERP de trazabilidad</p>
+  <h2><span class="num">08</span>Qué incluye cada plan</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <thead>
+      <tr><th></th><th class="num">Lote</th><th class="num">Esencial</th><th class="num">Bodega</th><th class="num">Valle</th></tr>
+    </thead>
+    <tbody>
+      <tr class="destaca"><td><strong>Bolivianos al mes</strong></td><td class="num"><strong>290</strong></td><td class="num"><strong>690</strong></td><td class="num"><strong>1.490</strong></td><td class="num"><strong>2.900</strong></td></tr>
+      <tr><td>Botellas al año</td><td class="num">≤ 10.000</td><td class="num">≤ 40.000</td><td class="num">≤ 150.000</td><td class="num">≤ 500.000</td></tr>
+      <tr><td>Trazabilidad completa de la parcela a la botella</td><td class="num">sí</td><td class="num">sí</td><td class="num">sí</td><td class="num">sí</td></tr>
+      <tr><td>Pasaporte público por lote y por botella</td><td class="num">sí</td><td class="num">sí</td><td class="num">sí</td><td class="num">sí</td></tr>
+      <tr><td>Códigos por botella y archivo para la imprenta</td><td class="num">sí</td><td class="num">sí</td><td class="num">sí</td><td class="num">sí</td></tr>
+      <tr><td>Usuarios y roles</td><td class="num">ilimitados</td><td class="num">ilimitados</td><td class="num">ilimitados</td><td class="num">ilimitados</td></tr>
+      <tr><td>Parcelas</td><td class="num">hasta 5</td><td class="num">hasta 20</td><td class="num">ilimitadas</td><td class="num">ilimitadas</td></tr>
+      <tr><td>Reportes</td><td class="num">básicos</td><td class="num">completos</td><td class="num">+ laboratorio</td><td class="num">+ API</td></tr>
+      <tr><td>Certificados en cadena incluidos <span class="pill">Propuesta</span></td><td class="num">—</td><td class="num">—</td><td class="num">2.000/año</td><td class="num">10.000/año</td></tr>
+      <tr><td>Soporte</td><td class="num">48 h</td><td class="num">24 h</td><td class="num">8 h hábiles</td><td class="num">prioritario</td></tr>
+      <tr><td>Multi-bodega</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">hasta 2</td></tr>
+    </tbody>
+  </table>
+  <p class="nota">La funcionalidad offline —imprescindible para bodegas sin internet estable— entra incluida en todos los planes cuando esté lista. No es un extra que se cobra: es condición para operar en el valle.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>10</span></div>
+</section>
+
+<!-- 11 · DESCUENTOS Y CONDICIONES -->
+<section class="slide" data-titulo="Fase 1 · Descuentos y condiciones">
+  <p class="eyebrow">Fase 1 · ERP de trazabilidad</p>
+  <h2><span class="num">09</span>Descuentos, fundadores y piloto</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:24px">
+    <div class="caja oro">
+      <h3>Pago anual: se pagan 10 de 12 meses</h3>
+      <p>Un 17 % menos para la bodega y, sobre todo, <strong>caja por adelantado para nosotros</strong>, que es lo que más falta hace este trimestre. Con el pago anual se bonifica la puesta en marcha.</p>
+    </div>
+    <div class="caja oro">
+      <h3>Precio de fundador: −40 % permanente</h3>
+      <p>Para las primeras <strong>5</strong> bodegas aliadas, sobre la lista vigente de su plan. Se escribe en el contrato con su número («Bodega Fundadora n.º 1 de 5»), que además es argumento de venta para las siguientes.</p>
+    </div>
+    <div class="caja">
+      <h3>Piloto gratuito hasta el 31-03-2027</h3>
+      <p>Solo para quien firme antes del 28-11-2026 y acepte la media hora semanal de calibración. <strong>Recomendado limitarlo a 3 bodegas.</strong></p>
+    </div>
+    <div class="caja">
+      <h3>Sin permanencia</h3>
+      <p>Baja con 30 días de aviso, exportación de datos incluida y eliminación a pedido. Ya está firmado en la propuesta a Daroca.</p>
+    </div>
+  </div>
+  <div class="caja" style="margin-top:18px; border-color:var(--oro)">
+    <p><strong>El efecto en la caja, dicho claro:</strong> con el piloto gratis hasta marzo, el primer trimestre de 2027 <strong>no tiene suscripciones</strong>, solo puestas en marcha. La primera factura recurrente de verdad llega en <strong>abril de 2027</strong>. Por eso conviene cobrar la puesta en marcha incluso a las fundadoras, aunque sea reducida: es lo único que entra entre hoy y marzo.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>11</span></div>
+</section>
+
+<!-- 12 · COMPLEMENTOS -->
+<section class="slide" data-titulo="Fase 1 · Complementos">
+  <p class="eyebrow">Fase 1 · complementos</p>
+  <h2><span class="num">10</span>Complementos <span class="pill">Propuesta, no lista cerrada</span></h2>
+  <hr class="regla">
+  <table class="compacta">
+    <colgroup><col style="width:27%"><col style="width:14%"><col></colgroup>
+    <thead><tr><th>Complemento</th><th class="num">Precio propuesto</th><th>Por qué ese número</th></tr></thead>
+    <tbody>
+      <tr class="destaca">
+        <td><strong>Certificado digital en cadena</strong>, por botella <span class="pill">Propuesta</span></td>
+        <td class="num"><strong>Bs 0,30</strong><br><span class="fuente">pack de 5.000: Bs 1.200</span></td>
+        <td>FIDEwine cobra hasta 1 €/botella/año (≈ Bs 13) por lo mismo: estamos en el 2 %. Nos cuesta ≈ 0,14 XLM <em>por lote</em>, no por botella. <strong>Piso: Bs 0,15</strong> si la botella además se entrega y se canja.</td>
+      </tr>
+      <tr>
+        <td><strong>Pack Exportación</strong> <span class="pill">Propuesta</span></td>
+        <td class="num"><strong>Bs 190/mes</strong><br><span class="fuente">o Bs 1.900 al año</span></td>
+        <td>Etiqueta electrónica compatible con la UE, ficha técnica en inglés, expediente sellado por lote y certificados de análisis. Registro.wine cobra 150 €/año (≈ Bs 1.950) solo por las etiquetas.</td>
+      </tr>
+      <tr>
+        <td><strong>Puesta en marcha remota</strong></td>
+        <td class="num"><strong>Bs 900</strong></td>
+        <td rowspan="2">Ajustadas a la baja (venían de Bs 1.900 y 4.900) por precio local: InnoVint cobra desde $500 (≈ Bs 6.000) solo de puesta en marcha y una implantación en Panamá va de B/. 4.500 a 12.000, pero son precios de otro mercado. <strong>Bonificadas con el pago anual.</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Puesta en marcha presencial</strong>, 2–3 días en bodega</td>
+        <td class="num"><strong>Bs 3.900</strong><br><span class="fuente">más viáticos</span></td>
+      </tr>
+      <tr>
+        <td>Usuarios adicionales · funcionalidad offline</td>
+        <td class="num"><strong>Bs 0</strong></td>
+        <td>Promesa hecha, y el dato completo nos sirve más que la licencia. Lo offline es condición de uso, no un extra.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="caja" style="margin-top:16px; border-color:var(--oro)">
+    <p><strong>Regla para el evento del 28:</strong> del certificado por botella se habla por <strong>línea premium y de exportación</strong>, nunca por la producción total. Una bodega de 300.000 botellas de vino de mesa no acepta Bs 0,30 por botella —serían Bs 90.000— y no hace falta: se le ofrece para sus 5.000 botellas de reserva, donde el certificado sí agrega precio de venta.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>12</span></div>
+</section>
+
+<!-- 13 · POR QUÉ RESISTEN -->
+<section class="slide" data-titulo="Fase 1 · Por qué estos números resisten">
+  <p class="eyebrow">Fase 1 · defensa del precio</p>
+  <h2><span class="num">11</span>Tres pruebas que estos precios pasan</h2>
+  <hr class="regla">
+  <div class="cols c3" style="gap:22px">
+    <div>
+      <div class="cifra"><b>1,2 %</b><span>de la facturación de la bodega, en el plan Esencial</span></div>
+      <div class="barra"><i style="width:1.2%"></i></div>
+      <p class="nota" style="margin-top:8px">Nunca pasa del 2 %, y baja a 0,4 % en el plan Valle. El software deja de ser una decisión mensual del dueño.</p>
+    </div>
+    <div>
+      <div class="cifra"><b>Bs 0,21</b><span>por botella, frente a Bs 3,70 de impuesto por botella</span></div>
+      <div class="barra"><i style="width:5.7%"></i></div>
+      <p class="nota" style="margin-top:8px">El 5,7 % de lo que ya paga en tributo por cada botella. En el plan Bodega, el 3,2 %.</p>
+    </div>
+    <div>
+      <div class="cifra"><b>$58</b><span>contra $95–160 de la entrada internacional</span></div>
+      <div class="barra"><i style="width:40%"></i></div>
+      <p class="nota" style="margin-top:8px">Y contra $100–380 de un ERP regional con cinco usuarios, que además no hace trazabilidad ni pasaporte.</p>
+    </div>
+  </div>
+  <div class="caja oro" style="margin-top:22px">
+    <h3>La respuesta a «está caro»</h3>
+    <p>«¿Cuánto te costó la última vez que tuviste que demostrar de dónde salió un lote, con papeles? Esto son Bs 690 al mes, sin permanencia, con todo tu equipo adentro y los datos son tuyos. Y si lo tomás por año, pagás diez meses.»</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>13</span></div>
+</section>
+
+<!-- 14 · ESCENARIOS FASE 1 -->
+<section class="slide" data-titulo="Fase 1 · Escenarios 2027">
+  <p class="eyebrow">Fase 1 · proyección <span class="pill lleno">Proyección</span></p>
+  <h2><span class="num">12</span>Qué deja la suscripción en 2027</h2>
+  <hr class="regla">
+  <table>
+    <thead><tr><th>Escenario</th><th>Mezcla de bodegas</th><th class="num">Bs / mes</th><th class="num">Bs / año</th><th class="num">USD / año</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Conservador</strong><br><span class="fuente">10 bodegas</span></td><td>4 Lote · 5 Esencial · 1 Bodega</td><td class="num">6.100</td><td class="num">73.200</td><td class="num">≈ 6.100</td></tr>
+      <tr class="destaca"><td><strong>Pareto</strong><br><span class="fuente">20 bodegas, el mínimo que esperaba la reunión</span></td><td>6 Lote · 9 Esencial · 4 Bodega · 1 Valle</td><td class="num"><strong>16.810</strong></td><td class="num"><strong>201.720</strong></td><td class="num"><strong>≈ 16.800</strong></td></tr>
+      <tr><td><strong>Optimista</strong><br><span class="fuente">35 bodegas</span></td><td>10 Lote · 15 Esencial · 8 Bodega · 2 Valle</td><td class="num">30.970</td><td class="num">371.640</td><td class="num">≈ 31.000</td></tr>
+    </tbody>
+  </table>
+  <div class="cols c4" style="margin-top:20px">
+    <div class="cifra"><b>18–78 mil</b><span>Bs de puestas en marcha en el escenario Pareto (20 bodegas)</span></div>
+    <div class="cifra"><b>30.000</b><span>Bs de certificados en cadena, si 5 bodegas emiten 20.000 botellas</span></div>
+    <div class="cifra"><b>15.200</b><span>Bs de packs de exportación (8 bodegas)</span></div>
+    <div class="cifra"><b>280–340 mil</b><span>Bs de ingreso total del año, sumando todo (≈ $23–28 mil)</span></div>
+  </div>
+  <p class="nota">Las puestas en marcha y los complementos no son recurrentes: entran una vez. Lo que sostiene la empresa es la columna de Bs/mes.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>14</span></div>
+</section>
+
+<!-- 15 · MARKETPLACE · CÓMO SE MONETIZA -->
+<section class="slide" data-titulo="Fase 2 · Cómo se monetiza">
+  <p class="eyebrow">Fase 2 · marketplace y exportación · objetivo febrero 2027</p>
+  <h2><span class="num">13</span>De dónde sale el dinero del marketplace</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <thead><tr><th>Concepto</th><th class="num">Propuesta</th><th>Referencia</th></tr></thead>
+    <tbody>
+      <tr><td>Alta y publicación de la bodega</td><td class="num"><strong>Bs 0</strong></td><td>Vivino tampoco cobra alta; el catálogo es nuestro activo</td></tr>
+      <tr class="destaca"><td>Comisión sobre venta nacional</td><td class="num"><strong>10 %</strong><br><span class="fuente">7 % el primer año para fundadoras</span></td><td>Vivino: 10–20 %, negociado por bodega</td></tr>
+      <tr><td>Cobro</td><td class="num">QR <strong>0 %</strong> · tarjeta 2,5–3,5 %</td><td>La tarjeta se traslada o se descuenta; el QR no cuesta</td></tr>
+      <tr><td>Comisión sobre venta de exportación</td><td class="num"><strong>12 %</strong></td><td>Más gestión, documentación y posventa</td></tr>
+      <tr><td>Documentación de exportación (B2B)</td><td class="num">Bs 250 por envío</td><td>Solo en envíos con factura de exportación, no en cajas sueltas</td></tr>
+      <tr><td>Logística</td><td class="num">margen <strong>15–20 %</strong> sobre el flete</td><td>Base de negociación: 35 Bs/kg ciudad, 50 Bs provincia</td></tr>
+      <tr><td>Destacados y campañas</td><td class="num">Bs 300–900 por campaña</td><td>Opcional, no se lanza con el marketplace</td></tr>
+      <tr><td>Club de cava al consumidor</td><td class="num">Bs 199/mes</td><td>A validar en fase 2; no se anuncia el 28-11</td></tr>
+    </tbody>
+  </table>
+  <p class="nota">El marketplace ya está construido y publicado; lo que falta es conectarlo al backend real, dar de alta la pasarela y cerrar el flete. Nada de esto debe retrasar la fase 1, que es la que factura.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>15</span></div>
+</section>
+
+<!-- 16 · MARKETPLACE · SUPUESTOS -->
+<section class="slide" data-titulo="Fase 2 · Supuestos">
+  <p class="eyebrow">Fase 2 · los supuestos antes de los números <span class="pill lleno">Proyección</span></p>
+  <h2><span class="num">14</span>Con qué supuestos están hechas las cuentas</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <thead><tr><th>Supuesto</th><th class="num">Valor</th><th>De dónde sale</th></tr></thead>
+    <tbody>
+      <tr><td>Comisión nacional / exportación</td><td class="num">10 % / 12 %</td><td>Vivino cobra 10–20 % <span class="pill dato">Dato</span></td></tr>
+      <tr><td>Ticket nacional (caja de 6 premium)</td><td class="num">Bs 250–300</td><td>Botella premium boliviana Bs 40–45 <span class="pill dato">Dato</span></td></tr>
+      <tr><td>Ticket de exportación al consumidor (6 botellas)</td><td class="num">Bs 700–750</td><td>Precio premium más margen de exportación</td></tr>
+      <tr><td>Pedido de exportación a distribuidor (pallet)</td><td class="num">Bs 25.000–30.000</td><td>A confirmar con el operador</td></tr>
+      <tr><td>Margen sobre el flete</td><td class="num">15 %</td><td>35 Bs/kg ciudad, 50 Bs provincia <span class="pill dato">Dato de la reunión</span></td></tr>
+      <tr><td>Mezcla de cobro nacional</td><td class="num">60 % QR · 40 % tarjeta</td><td>QR Simple sin comisión <span class="pill dato">Dato, BCP</span></td></tr>
+      <tr><td>Devoluciones y roturas</td><td class="num">1,5 % de la venta al consumidor</td><td>Supuesto conservador de e-commerce</td></tr>
+      <tr><td>Atención y posventa</td><td class="num">Bs 35 por hora</td><td>Costo interno estimado</td></tr>
+    </tbody>
+  </table>
+  <div class="caja" style="margin-top:16px; border-color:var(--oro)">
+    <p><strong>Lo que todavía no sabemos:</strong> las tarifas reales de DHL o FedEx para envíos <em>internacionales</em> —las de 35 y 50 Bs/kg son locales— y el costo de alta y certificación de la pasarela de tarjeta. Hasta tenerlas, <strong>no se le prometen comisiones a ninguna bodega el 28-11</strong>.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>16</span></div>
+</section>
+
+<!-- 17 · MARKETPLACE · PROYECCIÓN -->
+<section class="slide" data-titulo="Fase 2 · Proyección mensual">
+  <p class="eyebrow">Fase 2 · cuánto entra y cuánto sale, por mes <span class="pill lleno">Proyección</span></p>
+  <h2><span class="num">15</span>Proyección mensual del marketplace</h2>
+  <hr class="regla">
+  <div class="cols c3" style="gap:18px">
+
+    <div>
+      <p class="eyebrow" style="margin-bottom:4px">Conservador · 1.er semestre 2027</p>
+      <table class="compacta" style="font-size:12.5px">
+        <thead><tr><th>Línea</th><th class="num">Ped.</th><th class="num">GMV</th><th class="num">Ingreso</th></tr></thead>
+        <tbody>
+          <tr><td>Nacional</td><td class="num">25</td><td class="num">6.250</td><td class="num">625</td></tr>
+          <tr><td>Export. consumidor</td><td class="num">4</td><td class="num">2.800</td><td class="num">696</td></tr>
+          <tr><td>Export. distribuidor</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr class="total"><td><strong>Ingreso</strong></td><td class="num"></td><td class="num">9.050</td><td class="num"><strong>1.321</strong></td></tr>
+          <tr><td colspan="3">Costos (pasarela, devoluciones, atención, infra, marketing)</td><td class="num">1.409</td></tr>
+          <tr class="total"><td colspan="3"><strong>Margen</strong></td><td class="num"><strong>−90</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="nota" style="margin-top:6px">Se paga solo y nada más.</p>
+    </div>
+
+    <div>
+      <p class="eyebrow" style="margin-bottom:4px">Base · 2.º semestre 2027</p>
+      <table class="compacta" style="font-size:12.5px">
+        <thead><tr><th>Línea</th><th class="num">Ped.</th><th class="num">GMV</th><th class="num">Ingreso</th></tr></thead>
+        <tbody>
+          <tr><td>Nacional</td><td class="num">60</td><td class="num">16.800</td><td class="num">1.680</td></tr>
+          <tr><td>Export. consumidor</td><td class="num">10</td><td class="num">7.000</td><td class="num">1.740</td></tr>
+          <tr><td>Export. distribuidor</td><td class="num">0,5</td><td class="num">12.500</td><td class="num">1.925</td></tr>
+          <tr class="total"><td><strong>Ingreso</strong></td><td class="num"></td><td class="num">36.300</td><td class="num"><strong>5.345</strong></td></tr>
+          <tr><td colspan="3">Costos</td><td class="num">2.654</td></tr>
+          <tr class="total"><td colspan="3"><strong>Margen</strong></td><td class="num"><strong>2.690</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="nota" style="margin-top:6px">≈ $225 al mes · Bs 32.000 al año.</p>
+    </div>
+
+    <div>
+      <p class="eyebrow" style="margin-bottom:4px">Optimista · 2028</p>
+      <table class="compacta" style="font-size:12.5px">
+        <thead><tr><th>Línea</th><th class="num">Ped.</th><th class="num">GMV</th><th class="num">Ingreso</th></tr></thead>
+        <tbody>
+          <tr><td>Nacional</td><td class="num">150</td><td class="num">45.000</td><td class="num">4.500</td></tr>
+          <tr><td>Export. consumidor</td><td class="num">25</td><td class="num">18.750</td><td class="num">4.500</td></tr>
+          <tr><td>Export. distribuidor</td><td class="num">1</td><td class="num">30.000</td><td class="num">4.450</td></tr>
+          <tr class="total"><td><strong>Ingreso</strong></td><td class="num"></td><td class="num">93.750</td><td class="num"><strong>13.450</strong></td></tr>
+          <tr><td colspan="3">Costos</td><td class="num">5.852</td></tr>
+          <tr class="total"><td colspan="3"><strong>Margen</strong></td><td class="num"><strong>7.600</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="nota" style="margin-top:6px">≈ $633 al mes · Bs 91.000 al año.</p>
+    </div>
+
+  </div>
+  <p class="nota" style="margin-top:14px">Todos los montos en bolivianos por mes. «Ingreso» incluye comisión, margen de flete y, en exportación a distribuidor, los Bs 250 de documentación. «Ped.» son pedidos al mes (0,5 = uno cada dos meses).</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>17</span></div>
+</section>
+
+<!-- 18 · MARKETPLACE · COSTOS Y EQUILIBRIO -->
+<section class="slide" data-titulo="Fase 2 · Costos y equilibrio">
+  <p class="eyebrow">Fase 2 · en qué se gasta y cuándo empieza a ganar</p>
+  <h2><span class="num">16</span>Costos del marketplace y punto de equilibrio</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px">
+    <div>
+      <table class="compacta">
+        <caption>Costos mensuales en el escenario base</caption>
+        <thead><tr><th>Concepto</th><th class="num">Bs / mes</th><th class="num">Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>Pasarela de tarjeta</td><td class="num">447</td><td class="num">variable</td></tr>
+          <tr><td>Devoluciones y roturas</td><td class="num">357</td><td class="num">variable</td></tr>
+          <tr><td>Atención y posventa (20 h)</td><td class="num">700</td><td class="num">fijo</td></tr>
+          <tr><td>Infraestructura adicional</td><td class="num">150</td><td class="num">fijo</td></tr>
+          <tr><td>Marketing digital</td><td class="num">1.000</td><td class="num">fijo</td></tr>
+          <tr class="total"><td><strong>Total</strong></td><td class="num"><strong>2.654</strong></td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      <p class="nota">El desarrollo ya está hecho: el marketplace existe y está publicado. Lo que falta es conexión, pasarela y flete, que es trabajo propio, no gasto.</p>
+    </div>
+    <div>
+      <div class="cifra" style="margin-bottom:14px"><b>Bs 15.000</b><span>de venta al mes para entrar en equilibrio: costos fijos de Bs 1.850 y una tasa neta de ≈ 12,5 %</span></div>
+      <div class="caja">
+        <h3>Qué son Bs 15.000 al mes</h3>
+        <p>Unos <strong>55 pedidos nacionales</strong>, o <strong>20 pedidos y un pedido de exportación mediano</strong> cada dos meses. Con 15 bodegas publicadas es alcanzable; con 8, no.</p>
+      </div>
+      <div class="caja oro" style="margin-top:14px">
+        <h3>El riesgo que hay que mirar</h3>
+        <p>El marketing digital es el único costo que puede crecer sin techo. Si para vender Bs 36.000 hay que gastar Bs 3.000 en publicidad, el marketplace deja de tener sentido y se vuelve solo canal de exportación.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>18</span></div>
+</section>
+
+<!-- 19 · MARKETPLACE · CONCLUSIÓN -->
+<section class="slide" data-titulo="Fase 2 · La conclusión honesta">
+  <p class="eyebrow">Fase 2 · la conclusión que hay que decir en voz alta</p>
+  <h2><span class="num">17</span>El marketplace no es el motor</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px; align-items:start">
+    <div>
+      <div class="cifra" style="margin-bottom:6px"><b>Bs 2.690</b><span>de margen al mes en el escenario base del marketplace</span></div>
+      <div class="barra"><i style="width:49%"></i></div>
+      <div class="cifra" style="margin-top:18px"><b>Bs 2.760</b><span>lo que dejan cuatro bodegas en el plan Esencial, sin logística, sin devoluciones y sin atención al consumidor</span></div>
+      <div class="barra suave"><i style="width:50%"></i></div>
+    </div>
+    <div>
+      <div class="caja oro">
+        <h3>Entonces, ¿para qué lo construimos?</h3>
+        <ul class="puntos" style="margin-top:8px">
+          <li><strong>Porque hace indispensable el ERP.</strong> La bodega que vende por el marketplace no puede dejar de trazar: el catálogo se alimenta del expediente.</li>
+          <li><strong>Porque abre la exportación</strong>, que es donde están los tickets de Bs 25.000 y el margen de flete.</li>
+          <li><strong>Porque genera el dato de consumo</strong>, que es el insumo de la fase 3 y de cualquier conversación con un inversor.</li>
+          <li><strong>Porque es lo que el consumidor ve</strong>, y el pasaporte público solo tiene sentido si hay dónde comprar la botella.</li>
+        </ul>
+      </div>
+      <p class="nota">Dicho de otra manera: la comisión paga la operación del marketplace; la suscripción paga la empresa.</p>
+    </div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>19</span></div>
+</section>
+
+<!-- 20 · FASE 3 -->
+<section class="slide" data-titulo="Fase 3 · Investigación">
+  <p class="eyebrow">Fase 3 · módulo de investigación científica</p>
+  <h2><span class="num">18</span>Investigación <span class="pill">Pendiente de benchmarking</span></h2>
+  <hr class="regla">
+  <p class="lead">Esta fase <strong>no lleva precio todavía</strong>. Antes de ponerle tarifa hay que mirar qué cobran las plataformas de datos de investigación, los repositorios institucionales y las licencias académicas de software agro. Lo que sigue es el marco de la conversación, no una lista.</p>
+  <div class="cols c2" style="gap:24px">
+    <div class="caja">
+      <h3>Lo que sí está decidido</h3>
+      <ul class="puntos" style="margin-top:8px">
+        <li><strong>Modelo freemium</strong>: el uso en la plataforma es libre; se cobra la <strong>salida</strong> del dato (exportación) y la retención extendida, al estilo del límite de 90 días de Slack.</li>
+        <li><strong>El dato es de la bodega.</strong> Está firmado con Daroca: ningún acuerdo con una universidad puede incluir datos identificables sin su permiso.</li>
+        <li><strong>La carta abierta de Jürgen Kolberg</strong> vale más como aval científico que como contrato.</li>
+      </ul>
+    </div>
+    <div class="caja oro">
+      <h3>Dónde está el dinero de esta fase</h3>
+      <p style="margin-bottom:10px">No en la licencia: en los fondos de investigación y en los programas sin equity.</p>
+      <table class="compacta" style="font-size:13px">
+        <tbody>
+          <tr><td><strong>Stellar Community Fund · Build</strong></td><td class="num">hasta <strong>$150.000</strong> en XLM</td></tr>
+          <tr><td>SCF · Kickstart</td><td class="num">hasta $15.000 en XLM</td></tr>
+          <tr><td>Start-Up Chile</td><td class="num">sin equity</td></tr>
+          <tr><td>Platanus Ventures</td><td class="num">$200.000 por ≈ 7 %</td></tr>
+        </tbody>
+      </table>
+      <p class="nota" style="margin-top:9px">El 7 % de Platanus entra dentro del techo del 17 % que fijamos, e implica valorar la empresa en ≈ $2,9 millones. Es el número con el que se mide cualquier otra oferta.</p>
+    </div>
+  </div>
+  <p class="nota">Próximo paso: benchmarking de esta fase y, con él, la propuesta a Jürgen Kolberg, que se escribe aparte.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>20</span></div>
+</section>
+
+<!-- 21 · CANAL -->
+<section class="slide" data-titulo="Canal · cuánto pagar por bodega">
+  <p class="eyebrow">Canal comercial</p>
+  <h2><span class="num">19</span>Cuánto pagar por una bodega cerrada</h2>
+  <hr class="regla">
+  <div class="cols c4" style="margin-bottom:18px">
+    <div class="cifra"><b>Bs 24.840</b><span>Valor de una bodega Esencial a tres años</span></div>
+    <div class="cifra"><b>Bs 2.760</b><span>Techo razonable de costo de adquisición (un tercio del primer año)</span></div>
+    <div class="cifra"><b>Bs 84</b><span>Los $7 por bodega de la reunión: el 1 % del primer año</span></div>
+    <div class="cifra"><b>Bs 814</b><span>Lo que propone este modelo por bodega Esencial</span></div>
+  </div>
+  <table class="compacta">
+    <thead><tr><th>Esquema</th><th class="num">Costo</th><th>Cuándo conviene</th></tr></thead>
+    <tbody>
+      <tr class="destaca"><td><strong>A · Solo variable</strong> <span class="pill">Recomendado</span></td><td class="num">Bs 400 por bodega activada<br>+ 5 % de lo cobrado en 12 meses</td><td>Ahora: no hay caja y el riesgo lo comparte el comercial</td></tr>
+      <tr><td><strong>B · Retainer más variable</strong></td><td class="num">Bs 1.500/mes + Bs 250 por activación</td><td>Desde ~8 bodegas al año, y solo con la persona ya probada</td></tr>
+      <tr><td><strong>C · Viajes propios</strong></td><td class="num">Bs 1.200–1.800 por viaje <em>(estimado)</em></td><td>Para las 3 primeras bodegas, donde la calibración la tenemos que hacer nosotros igual</td></tr>
+    </tbody>
+  </table>
+  <div class="caja oro" style="margin-top:16px">
+    <p><strong>La condición importa más que el monto:</strong> la activación se paga <strong>cuando la bodega registra su primer lote real</strong>, no cuando firma. Es lo que necesitamos para calibrar el producto y lo que evita altas de humo que después hay que sostener gratis.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>21</span></div>
+</section>
+
+<!-- 22 · NUESTROS COSTOS -->
+<section class="slide" data-titulo="Nuestros costos y equilibrio">
+  <p class="eyebrow">Lo que nos cuesta sostener todo esto</p>
+  <h2><span class="num">20</span>Costos propios y punto de equilibrio</h2>
+  <hr class="regla">
+  <div class="cols c2" style="gap:26px">
+    <div>
+      <table class="compacta">
+        <caption>Estimaciones a verificar con las facturas reales</caption>
+        <thead><tr><th>Concepto</th><th class="num">Bs / mes</th></tr></thead>
+        <tbody>
+          <tr><td>Servidor del backend (5 vCPU, 9,7 GiB)</td><td class="num">360–450</td></tr>
+          <tr><td>Vercel (equipo, 2 asientos)</td><td class="num">480</td></tr>
+          <tr><td>Correo transaccional</td><td class="num">0–240</td></tr>
+          <tr><td>Dominios, respaldos y varios</td><td class="num">100–200</td></tr>
+          <tr><td>Cadena: mantener vivo el contrato <span class="pill dato">Medido</span></td><td class="num">≈ 11</td></tr>
+          <tr class="total"><td><strong>Total</strong></td><td class="num"><strong>950–1.380</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="nota">El costo marginal de una bodega nueva es casi cero en infraestructura. El costo real es el soporte (2–4 h al mes por bodega) y la puesta en marcha.</p>
+    </div>
+    <div>
+      <div class="cifra" style="margin-bottom:16px"><b>2 bodegas</b><span>Una Bodega o dos Esencial pagan toda la infraestructura de la plataforma</span></div>
+      <div class="cifra" style="margin-bottom:16px"><b>7 bodegas</b><span>Planes Esencial para cubrir infraestructura más un salario mínimo</span></div>
+      <div class="caja oro">
+        <h3>El riesgo cambiario, en su justa medida</h3>
+        <p>La infraestructura se paga en dólares y euros con tarjeta; los ingresos son en bolivianos. Con el dólar en <strong>Bs 12,09</strong> y el paralelo en Bs 11,93–11,97, hoy la brecha es mínima. Aun así: colchón en divisa y <strong>cláusula de revisión anual</strong> de la lista en el contrato.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>22</span></div>
+</section>
+
+<!-- 23 · RIESGOS -->
+<section class="slide" data-titulo="Riesgos del modelo">
+  <p class="eyebrow">Lo que puede salir mal y cómo se tapa</p>
+  <h2><span class="num">21</span>Riesgos del modelo de precios</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <thead><tr><th>Riesgo</th><th>Cómo se tapa</th></tr></thead>
+    <tbody>
+      <tr><td>Regalar demasiadas licencias hasta marzo deja la caja en cero</td><td>Tope de <strong>3</strong> fundadoras gratuitas; de la cuarta en adelante, precio de fundador y cobro desde el primer mes</td></tr>
+      <tr><td>El −40 % permanente puede pesar al escalar</td><td>Límite escrito de <strong>5 bodegas</strong>, atado al plan y a la lista vigente, no a un monto congelado</td></tr>
+      <tr><td>Si sube el XLM, el precio por botella se come su propio costo</td><td>Entregar y quemar cuesta 0,04–0,07 XLM: hoy Bs 0,07–0,13, pero con el XLM en su máximo histórico serían Bs 0,42–0,74. Se cubre comprando XLM por adelantado y revisando el precio cada enero</td></tr>
+      <tr><td>Prometer la funcionalidad offline como si ya existiera</td><td>Se dice «en construcción, con fecha». Si una bodega la necesita ya, se prorroga el piloto; <strong>nunca se baja el precio</strong> por una función que falta</td></tr>
+      <tr><td>Prometer el marketplace «gratis para siempre»</td><td>Se dice: «el alta no cuesta; la comisión se paga solo sobre lo que se venda»</td></tr>
+      <tr><td>Pagar comisión por firmas que no usan el sistema</td><td>Activación pagada contra <strong>primer lote real registrado</strong></td></tr>
+      <tr class="destaca"><td><strong>Que el precio salga antes que el producto</strong></td><td>Ninguna lista se publica antes de que las apps tengan en producción lo que hoy está en desarrollo, el correo real funcione y la guardia anti-demo esté fusionada</td></tr>
+    </tbody>
+  </table>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>23</span></div>
+</section>
+
+<!-- 24 · CÓMO SE DICE EL PRECIO -->
+<section class="slide" data-titulo="Cómo se dice el precio">
+  <p class="eyebrow">Para la reunión del viernes y para el evento del 28</p>
+  <h2><span class="num">22</span>Cómo se dice el precio</h2>
+  <hr class="regla">
+  <div class="cols c3" style="gap:20px">
+    <div class="caja">
+      <h3>A Daroca, el viernes 6</h3>
+      <p>«Cero hasta el 31 de marzo, como está en la propuesta. Después, como Bodega Fundadora n.º 1, tienen el <strong>40 % menos</strong> que la lista de forma permanente: en su tramo son <strong>Bs 894 al mes</strong>, con todo su equipo adentro, sin cobro por usuario y sin permanencia. Si lo pagan por año, son diez meses en vez de doce.»</p>
+    </div>
+    <div class="caja">
+      <h3>A una bodega en el evento</h3>
+      <p>«Depende de cuántas botellas embotellás al año, no de cuánta gente lo use. Si estás por debajo de 40.000 botellas, son <strong>Bs 690 al mes</strong> con todo tu equipo adentro. Son veintiún centavos por botella, cuando por cada botella ya pagás <strong>Bs 3,70</strong> de impuesto.»</p>
+    </div>
+    <div class="caja">
+      <h3>A quien dice que es caro</h3>
+      <p>«¿Cuánto te costó la última vez que tuviste que demostrar de dónde salió un lote, con papeles? Son Bs 690 al mes, sin permanencia, y los datos son tuyos y te los llevás cuando quieras. Y si lo tomás por año, pagás diez meses.»</p>
+    </div>
+  </div>
+  <div class="caja oro" style="margin-top:20px">
+    <h3>La regla de oro</h3>
+    <p>No se dice un precio sin decir el tramo de botellas. Un número suelto —como el que casi se dice en la reunión con Adrián cuando preguntó «¿cuánto cuesta?»— después amarra.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>24</span></div>
+</section>
+
+<!-- 25 · CIERRE -->
+<section class="slide" data-titulo="Cierre y fuentes">
+  <p class="eyebrow">Para cerrar</p>
+  <h2><span class="num">23</span>Lo que sale de esta reunión</h2>
+  <hr class="regla">
+  <div class="cols c4" style="margin-bottom:20px">
+    <div class="cifra"><b>1</b><span>Lista de cuatro planes aprobada y, si se decide, publicada</span></div>
+    <div class="cifra"><b>2</b><span>Número de licencias gratuitas hasta el 31 de marzo</span></div>
+    <div class="cifra"><b>3</b><span>Los dos complementos salen como propuesta a validar</span></div>
+    <div class="cifra"><b>4</b><span>Esquema de comisión del comercial de Tarija</span></div>
+  </div>
+  <div class="caja" style="border-color:var(--oro)">
+    <p><strong>Y una fecha que manda sobre todas:</strong> el ERP tiene que estar operativo en producción el <strong>sábado 7 de noviembre</strong> para poder viajar el 8. Un precio sin producto es una conversación que no se puede sostener el 28.</p>
+  </div>
+  <hr class="regla" style="margin-top:22px">
+  <p class="fuente" style="line-height:1.5">
+    <strong>Fuentes del benchmarking:</strong> evins.io · Capterra, GetApp e itQlick (Vintrace, InnoVint) · Cepaos y softwaredoit (España) · fidewine.com · registro.wine · e-label.online · e-label.eu · myproductpassport.eu · FourWeekMBA y FATbit (Vivino) · BCP y PagosYa (QR Simple) · rodrifer.dev (pasarelas) · KELUA (Perú) · cifraHQ (Panamá) · versat.ag · ANIV vía eju.tv y El Andaluz (precio de la botella y tributo) · Unitel (salario mínimo, DS 5516) · Red Uno (tipo de cambio) · Publiagro y Tim Atkin (producción de Tarija) · El Deber (Ruta del Vino) · stellar.org y Medium (SCF) · ecosistemastartup (Platanus).
+    <strong>Fuentes propias:</strong> <em>drinks-on-chain-contracts/docs/costes.md</em> (costos medidos en la cadena) · <em>comercial/daroca/</em> (condiciones ya comprometidas) · <em>plan/analisis-piloto-real.md</em> (estado del sistema).
+  </p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>25</span></div>
+</section>
+
+</div><!-- /stage -->
+</div><!-- /deck -->
+
+<nav class="nav" aria-label="Navegación de la presentación">
+  <button type="button" id="ant" aria-label="Lámina anterior">&larr;</button>
+  <span class="cuenta" id="cuenta">1 / 25</span>
+  <button type="button" id="sig" aria-label="Lámina siguiente">&rarr;</button>
+  <select id="indice" aria-label="Ir a una lámina"></select>
+  <button type="button" id="imprimir" aria-label="Imprimir o exportar a PDF">Imprimir</button>
+</nav>
+
+<script>
+(function(){
+  var stage = document.getElementById('stage');
+  var slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
+  var cuenta = document.getElementById('cuenta');
+  var indice = document.getElementById('indice');
+  var actual = 0;
+
+  /* El cuerpo de cada lámina se centra entre la regla de oro y el pie */
+  slides.forEach(function(s){
+    var regla = s.querySelector(':scope > .regla');
+    if (!regla) return;
+    var cuerpo = document.createElement('div');
+    cuerpo.className = 'cuerpo';
+    var n = regla.nextSibling;
+    while (n) {
+      var sig = n.nextSibling;
+      if (!(n.nodeType === 1 && n.classList.contains('pie-slide'))) cuerpo.appendChild(n);
+      n = sig;
+    }
+    s.insertBefore(cuerpo, s.querySelector(':scope > .pie-slide'));
+  });
+
+  slides.forEach(function(s, i){
+    var op = document.createElement('option');
+    op.value = String(i);
+    op.textContent = (i + 1) + ' · ' + (s.dataset.titulo || '');
+    indice.appendChild(op);
+  });
+
+  function escalar(){
+    var m = 28;
+    var k = Math.min((window.innerWidth - m) / 1280, (window.innerHeight - m - 40) / 720);
+    stage.style.transform = 'translate(-50%, -50%) scale(' + k + ')';
+  }
+
+  function ir(i, conHash){
+    actual = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function(s, j){ s.classList.toggle('is-active', j === actual); });
+    cuenta.textContent = (actual + 1) + ' / ' + slides.length;
+    indice.value = String(actual);
+    if (conHash !== false) {
+      try { history.replaceState(null, '', '#' + (actual + 1)); } catch (e) {}
+    }
+  }
+
+  document.getElementById('sig').addEventListener('click', function(){ ir(actual + 1); });
+  document.getElementById('ant').addEventListener('click', function(){ ir(actual - 1); });
+  document.getElementById('imprimir').addEventListener('click', function(){ window.print(); });
+  indice.addEventListener('change', function(){ ir(parseInt(indice.value, 10)); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+    switch (e.key) {
+      case 'ArrowRight': case 'PageDown': case ' ': ir(actual + 1); e.preventDefault(); break;
+      case 'ArrowLeft': case 'PageUp': ir(actual - 1); e.preventDefault(); break;
+      case 'Home': ir(0); e.preventDefault(); break;
+      case 'End': ir(slides.length - 1); e.preventDefault(); break;
+    }
+  });
+
+  window.addEventListener('resize', escalar);
+  escalar();
+  var inicial = parseInt((location.hash || '').replace('#', ''), 10);
+  ir(isNaN(inicial) ? 0 : inicial - 1, false);
+})();
+</script>
+</body>
+</html>
