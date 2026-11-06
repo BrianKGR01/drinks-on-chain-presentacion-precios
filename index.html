@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Modelo de precios · Drinks on Chain</title>
+<title>Bitácora · Drinks on Chain</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -178,6 +178,36 @@
     border:1px solid var(--linea); background:transparent; color:var(--tinta-suave); padding:5px 6px; border-radius:2px;
   }
 
+
+  /* ---------- barra de capitulos ---------- */
+  .capitulos{
+    position:fixed; top:14px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:stretch; gap:0;
+    background:rgba(253,252,245,.94); border:1px solid var(--linea);
+    border-radius:3px; box-shadow:0 1px 10px rgba(43,42,38,.12);
+    z-index:10; overflow:hidden; max-width:94vw;
+  }
+  .capitulos button{
+    font-family:inherit; font-size:12px; line-height:1.2;
+    background:transparent; border:0; border-left:1px solid var(--linea);
+    color:var(--tinta-suave); padding:7px 14px; cursor:pointer;
+    display:flex; flex-direction:column; align-items:flex-start; gap:1px;
+    white-space:nowrap; text-align:left;
+  }
+  .capitulos button:first-child{ border-left:0; }
+  .capitulos button i{
+    font-style:normal; font-size:8.5px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--oro); font-weight:500;
+  }
+  .capitulos button:hover{ color:var(--oro-hondo); background:var(--crema); }
+  .capitulos button[aria-current="true"]{ background:var(--oro-hondo); color:#fff; }
+  .capitulos button[aria-current="true"] i{ color:rgba(255,255,255,.72); }
+  .capitulos button:focus-visible{ outline:2px solid var(--oro); outline-offset:-2px; }
+  .capitulo{ display:none; }
+  .capitulo.is-active{ display:block; }
+  /* Al imprimir sale solo el capitulo que se esta viendo, no los dos */
+  @media print{ .capitulos{ display:none; } .capitulo{ display:none; } .capitulo.is-active{ display:block; } }
+
   /* ---------- impresión ---------- */
   @page{ size:1280px 720px; margin:0; }
   @media print{
@@ -193,6 +223,8 @@
 
 <div class="deck">
 <div class="stage" id="stage">
+
+<div class="capitulo" data-titulo="Modelo de precios" data-fecha="04-11-2026">
 
 <!-- 1 · PORTADA -->
 <section class="slide portada is-active" data-titulo="Portada">
@@ -1209,8 +1241,540 @@
   <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>32</span></div>
 </section>
 
+</div><!-- /capitulo 1 -->
+
+<div class="capitulo" data-titulo="Estado y decisiones" data-fecha="06-11-2026">
+
+<!-- 1 · PORTADA -->
+<section class="slide portada is-active" data-titulo="Portada">
+  <div class="logo" role="img" aria-label="Drinks on Chain"></div>
+  <h1>Dónde estamos <span class="amp">&amp;</span><br>qué hay que decidir</h1>
+  <p class="sub">Qué pasó con Bodega Daroca y con la Universidad Católica, qué se construyó y quién puso qué, cuánto cuesta cada camino y las dos opciones que hay sobre la mesa.</p>
+  <div class="meta">
+    <div><b>06 de noviembre de 2026</b>Reunión de fundadores</div>
+    <div><b>Kevin Gómez</b>Mi lectura, no un estado oficial</div>
+    <div><b>Para decidir</b>No para publicar</div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>1</span></div>
+</section>
+
+<!-- 2 · QUE PASO -->
+<section class="slide" data-titulo="Qué pasó esta semana">
+  <p class="eyebrow">Resumen</p>
+  <h2>Tres cosas pasaron esta semana y cambian el plan</h2>
+  <hr class="regla">
+  <div class="cols c3">
+    <div class="caja"><h3>Daroca no puede arrancar ahora</h3><p>No es el precio ni el producto: es el tiempo. Adrián viaja hasta mediados de diciembre constituyendo la carrera de Enología.</p></div>
+    <div class="caja"><h3>La Católica tampoco está en su momento</h3><p>La carrera se está constituyendo y lanzan en Cochabamba la próxima semana. No somos su prioridad, y es razonable que no lo seamos.</p></div>
+    <div class="caja oro"><h3>Sin bodega no hay lote real</h3><p>Y sin lote real, el evento del 28 de noviembre es una demostración con datos de prueba ante 50 bodegas.</p></div>
+  </div>
+  <div class="cols c2" style="margin-top:20px">
+    <div class="caja oro"><h3>Lo que no se discute</h3><p>Hay que postular al Stellar Community Fund y a los Instawards. <strong>El formulario de interés cierra este domingo 8.</strong> Es el único dinero a la vista que supera varias veces toda la facturación optimista de 2027.</p></div>
+    <div class="caja"><h3>Lo que sí hay que decidir</h3><p>Si mantenemos el lanzamiento del 28 o lo posponemos para terminar bien el software y entrar de forma orgánica. Y qué rumbo toma el proyecto.</p></div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>2</span></div>
+</section>
+
+<!-- 3 · LAS DOS OPCIONES, DE UN VISTAZO -->
+<section class="slide" data-titulo="Las dos opciones, de un vistazo">
+  <p class="eyebrow">La decisión</p>
+  <h2><span class="num">01</span>Las dos opciones, de un vistazo</h2>
+  <hr class="regla">
+  <table>
+    <thead><tr><th style="width:24%"></th><th>A · Lanzar el 28 de noviembre</th><th>B · Posponer y hacerlo bien</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Qué significa</strong></td><td>Mantener el evento con bodega de demostración</td><td>Terminar el software, conseguir el primer caso real y contratar a alguien que recorra bodegas</td></tr>
+      <tr class="destaca"><td><strong>Plata a poner nov–mar</strong></td><td class="plan-nombre">Bs 12.700 – 16.500</td><td class="plan-nombre">Bs 5.300 – 9.400</td></tr>
+      <tr><td><strong>Primera factura</strong></td><td>abril de 2027</td><td><strong>podría adelantarse a febrero</strong></td></tr>
+      <tr><td><strong>Qué se muestra</strong></td><td>el sistema con datos de prueba</td><td>el sistema con un lote de verdad</td></tr>
+      <tr><td><strong>Riesgo principal</strong></td><td>gastar el único tiro de primera impresión ante 50 bodegas</td><td>perder el impulso y que el proyecto se enfríe</td></tr>
+    </tbody>
+  </table>
+  <p class="nota">Los números de las dos columnas se desglosan en las láminas 15 y 18. Los supuestos están marcados uno por uno.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>3</span></div>
+</section>
+
+<!-- 4 · LA REUNION -->
+<section class="slide" data-titulo="La reunión con Adrián">
+  <p class="eyebrow">Estado comercial</p>
+  <h2><span class="num">02</span>Lo que dijo Adrián, con sus palabras</h2>
+  <hr class="regla">
+  <p class="lead">Reunión del 5 de noviembre, 26 minutos, grabada y transcrita.</p>
+  <table class="compacta">
+    <thead><tr><th style="width:52%">Qué dijo</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td><em>«toma de presupuestos y se nos complica un poco»</em></td><td>Presupuesto ajustado, pero lo dijo de pasada y sin insistir</td></tr>
+      <tr><td><em>«ahorita estamos terminando los papeles de exportación, entonces ahorita no es algo necesario como tal»</em></td><td><strong>No hay urgencia.</strong> La trazabilidad resolvía la exportación, y la exportación ya se está resolviendo sin nosotros</td></tr>
+      <tr class="destaca"><td><em>«yo estoy en la U… mi personal viene medio tiempo, solo en las mañanas… ese es uno de mis mayores problemas, el tema de tiempo»</em></td><td><strong>Esta es la objeción de verdad.</strong> La dijo dos veces</td></tr>
+      <tr><td><em>«esto yo lo necesito sí o sí de alguna otra manera»</em></td><td>El producto le gusta y lo quiere</td></tr>
+    </tbody>
+  </table>
+  <p class="nota">Lo que <strong>no</strong> dijo ni una sola vez: que el precio sea caro, que el producto no sirva, o que no confíe en nosotros.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>4</span></div>
+</section>
+
+<!-- 5 · LA CADENA QUE SE CAE -->
+<section class="slide" data-titulo="La consecuencia de calendario">
+  <p class="eyebrow">Estado comercial</p>
+  <h2><span class="num">03</span>Lo que se cae en cadena</h2>
+  <hr class="regla">
+  <p class="lead">No es una opinión: es aritmética de calendario, y sale de lo que él mismo dijo.</p>
+  <ol class="puntos">
+    <li>Sin Adrián, y con su gente a medio tiempo en plena temporada, <strong>la puesta en marcha del 9 al 13 no se puede hacer</strong>.</li>
+    <li>Sin puesta en marcha, no hay <strong>primer lote real</strong> registrado.</li>
+    <li>Sin lote real, no hay <strong>software calibrado</strong> al 21 de noviembre.</li>
+    <li>Sin caso real, el <strong>28 de noviembre</strong> se convierte en enseñar una demostración a 50 bodegas.</li>
+  </ol>
+  <div class="caja oro" style="margin-top:18px">
+    <h3>Y hay una partida que ya no está cubierta</h3>
+    <p>Los vinos y el personal de servicio del evento figuraban «en especie», porque salían de la bodega anfitriona. Hoy no tenemos bodega anfitriona. Si nadie los patrocina, salen de nuestro bolsillo.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>5</span></div>
+</section>
+
+<!-- 6 · DAROCA -->
+<section class="slide" data-titulo="Bodega Daroca · dónde quedó">
+  <p class="eyebrow">Estado comercial</p>
+  <h2><span class="num">04</span>Bodega Daroca: no quedó nada cerrado</h2>
+  <hr class="regla">
+  <p class="lead">No hay sí ni no: hay un «lo tengo que conversar». Adrián quiere implementar el sistema y quiere ser él quien lo presente puertas adentro, pero no tiene tiempo para consensuarlo ahora con el resto de la administración.</p>
+  <div class="cols c2">
+    <div class="caja"><h3>Lo que Kevin les comunicó después</h3><p>Para quitarles el peso de encima: que el lanzamiento se posterga, que los acompañaríamos a arrancar en diciembre o enero cuando a ellos les quede cómodo, y que nos gustaría que sean la bodega fundadora, sin pedirles que decidan ahora.</p></div>
+    <div class="caja oro"><h3>Que quede claro para esta reunión</h3><p><strong>Con Daroca no hay nada cerrado.</strong> No hay local, ni vinos, ni personal de servicio, ni fecha, ni compromiso de ningún tipo. Si hacemos un evento, hoy por hoy lo hacemos por nuestra cuenta y con nuestra plata.</p></div>
+  </div>
+  <div class="glosario">
+    <span class="rotulo">Interpretación de Kevin, no un hecho</span>
+    Me da la impresión de que el resto de la administración todavía no ve la urgencia de implementar Drinks on Chain en este momento de la bodega. <b>Adrián no me lo dijo con esas palabras y puedo estar equivocado.</b> Lo escribo porque cambia lo que tenemos que hacer —no alcanza con convencer a Adrián, hay que llegar al equipo completo— y no para juzgar a nadie: durante la reunión él estaba atendiendo a sus asesores en una cata de la cosecha nueva. Ese es el momento en el que está la bodega.
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>6</span></div>
+</section>
+
+<!-- 7 · UCB Y LAS CARTAS -->
+<section class="slide" data-titulo="La Católica y las cartas">
+  <p class="eyebrow">Estado comercial</p>
+  <h2><span class="num">05</span>La Universidad Católica, y lo único que pedimos</h2>
+  <hr class="regla">
+  <p class="lead">La carrera de Ingeniería y Tecnicatura en Enología y Viticultura <strong>se está constituyendo todavía</strong>. Lanzan en Cochabamba la próxima semana y Adrián seguirá viajando por eso hasta mediados de diciembre. No somos una prioridad para ellos ahora, y no hay nada que reprochar.</p>
+  <p class="lead">El 5 de noviembre se envió la propuesta formal al rector, Lic. Jurgen Kohlberg, con copia a Adrián: colaboración académica sin costo para la Universidad, con el Módulo de Investigación co-diseñado con la carrera y financiado con el fondo al que postulamos.</p>
+  <table>
+    <thead><tr><th>Carta de respaldo pedida a</th><th>Cómo se pidió</th><th style="width:20%">Estado</th></tr></thead>
+    <tbody>
+      <tr><td><strong>UCB Sede Tarija</strong></td><td>Correo al rector el 05-11, con el modelo de carta ya redactado</td><td><span class="pill">Sin confirmar</span></td></tr>
+      <tr><td><strong>Viñedos y Bodega Daroca</strong></td><td>WhatsApp y correo el 05-11, con el modelo de carta ya redactado</td><td><span class="pill">Sin confirmar</span></td></tr>
+    </tbody>
+  </table>
+  <p class="nota">A las dos se les mandó la carta escrita y lista para firmar: era lo máximo que podíamos hacer para que ayudarnos costara cero. <strong>Si no llegan, igual se postula.</strong></p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>7</span></div>
+</section>
+
+<!-- 8 · APORTES -->
+<section class="slide" data-titulo="Qué aportó cada uno">
+  <p class="eyebrow">Lo construido</p>
+  <h2><span class="num">06</span>Qué aportó cada uno</h2>
+  <hr class="regla">
+  <p class="lead">Esta lámina es para que quede registrado, no para pasarle factura a nadie.</p>
+  <div class="cols c3">
+    <div class="caja">
+      <h3>Vanessa Cárdenas</h3>
+      <ul class="puntos" style="margin-top:6px">
+        <li>La idea general del proyecto, de donde salió todo</li>
+        <li>El frente de exportación: reuniones con representantes de <strong>DHL</strong></li>
+        <li>Búsqueda de bodegas por su cuenta</li>
+        <li>El viaje a Tarija junto a Kevin: conversaciones con bodegas y recoger impresiones del valle</li>
+        <li>El tema de Clara queda en espera, para una etapa posterior</li>
+      </ul>
+    </div>
+    <div class="caja">
+      <h3>Diego Vargas</h3>
+      <ul class="puntos" style="margin-top:6px">
+        <li>Arquitectura y módulos, junto a Kevin</li>
+        <li><strong>Despliegue y operación del servidor</strong>, que además paga de su bolsillo</li>
+        <li><strong>La parte de blockchain</strong>: la IA dejó bases y él las corrigió e integró</li>
+        <li>Login, alta de usuarios y el correo real (Resend)</li>
+      </ul>
+    </div>
+    <div class="caja">
+      <h3>Kevin Gómez</h3>
+      <ul class="puntos" style="margin-top:6px">
+        <li>Arquitectura y módulos, junto a Diego</li>
+        <li><strong>Sistema de diseño completo</strong>: línea gráfica, componentes y animaciones</li>
+        <li>Un mes de suscripción de $100, con la que se construyó con ayuda de IA esta primera etapa</li>
+        <li>Tres semanas corrigiendo esa primera etapa hasta dejarla funcionando</li>
+        <li>El viaje a Tarija junto a Vanessa, y los días extra con Daroca y la Católica</li>
+      </ul>
+    </div>
+  </div>
+  <p class="nota">Los días extra que Kevin se quedó en Tarija no se contabilizan en ninguna cuenta de este documento.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>8</span></div>
+</section>
+
+<!-- 9 · EL DINERO PUESTO -->
+<section class="slide" data-titulo="El dinero puesto">
+  <p class="eyebrow">Lo construido</p>
+  <h2><span class="num">07</span>El dinero puesto hasta hoy</h2>
+  <hr class="regla">
+  <div class="cols c2" style="grid-template-columns:1.45fr 1fr; align-items:start">
+    <table>
+      <thead><tr><th>En qué</th><th style="width:16%">Quién</th><th class="num" style="width:14%">USD</th><th class="num" style="width:16%">Bs</th></tr></thead>
+      <tbody>
+        <tr><td>Suscripción para construir la primera etapa (1 mes)</td><td>Kevin</td><td class="num">100</td><td class="num">1.200</td></tr>
+        <tr><td>Servidor del backend (2 meses × $10)</td><td>Diego</td><td class="num">20</td><td class="num">240</td></tr>
+        <tr><td>Dominio <em>drinksonchain.com</em> (1 año)</td><td>Kevin</td><td class="num">20</td><td class="num">240</td></tr>
+        <tr class="total"><td><strong>Total desembolsado</strong></td><td></td><td class="num"><strong>140</strong></td><td class="num"><strong>1.680</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="cifra"><b>Bs 1.680</b><span>Todo lo que ha salido del bolsillo de los socios en poco más de dos meses. Ningún socio cobró sueldo.</span></div>
+  </div>
+  <div class="caja oro" style="margin-top:18px">
+    <h3>Sobre la devolución de esa plata</h3>
+    <p>Hoy no hay retorno, y no lo habrá hasta abril de 2027 en el mejor de los casos. Propongo que quede registrado como <strong>aporte reembolsable</strong>: se devuelve de la primera caja que entre, antes de cualquier reparto, y mientras tanto no genera interés ni participación extra. Son Bs 1.680 y no es la discusión importante, pero conviene dejarla escrita antes de que lo sea.</p>
+  </div>
+  <p class="nota">Nada más generó factura: la red de pruebas de Stellar no cuesta, el correo corre en el propio servidor y las webs están publicadas sin cargo.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>9</span></div>
+</section>
+
+<!-- 10 · EL ESFUERZO -->
+<section class="slide" data-titulo="El esfuerzo, medido">
+  <p class="eyebrow">Lo construido</p>
+  <h2><span class="num">08</span>El esfuerzo, medido y no estimado</h2>
+  <hr class="regla">
+  <p class="lead">Sale de contar los repositorios hoy, 6 de noviembre de 2026.</p>
+  <div class="cols c4">
+    <div class="cifra"><b>1.176</b><span>commits entre el 28-08 y el 06-11</span></div>
+    <div class="cifra"><b>15</b><span>repositorios</span></div>
+    <div class="cifra"><b>2.485</b><span>archivos versionados</span></div>
+    <div class="cifra"><b>20</b><span>jornadas con trabajo real</span></div>
+  </div>
+  <div class="cols c2" style="margin-top:22px">
+    <div class="caja"><h3>Cinco sistemas publicados y en producción</h3><p>Landing · Bodegas · ERP de trazabilidad · Marketplace y pasaporte público · Backend y worker, con despliegue automático.</p></div>
+    <div class="caja"><h3>Más de 200 horas</h3><p>Entre el primer y el último commit de cada jornada hay unas 138 horas. Sumando reuniones, el viaje a Tarija, las conversaciones con bodegas y la documentación comercial, el proyecto pasa holgadamente las 200.</p></div>
+  </div>
+  <p class="nota">Por decisión del equipo, el esfuerzo no se valora en dinero: se convierte en participación, con el techo del 17 % ya acordado.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>10</span></div>
+</section>
+
+<!-- 11 · LO QUE FUNCIONA -->
+<section class="slide" data-titulo="El software que funciona">
+  <p class="eyebrow">Estado del producto</p>
+  <h2><span class="num">09</span>Lo que funciona hoy, en producción</h2>
+  <hr class="regla">
+  <table>
+    <thead><tr><th style="width:30%">Sistema</th><th style="width:34%">Dirección</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Landing</strong></td><td><em>www.drinksonchain.com</em></td><td>En producción</td></tr>
+      <tr><td><strong>Bodegas</strong> · mapa del valle</td><td><em>bodegas.drinksonchain.com</em></td><td>En producción</td></tr>
+      <tr><td><strong>ERP de trazabilidad</strong></td><td><em>erp.drinksonchain.com</em></td><td>En producción, con cuentas reales</td></tr>
+      <tr><td><strong>Marketplace</strong> y pasaporte público</td><td><em>app.drinksonchain.com</em></td><td>En producción</td></tr>
+      <tr><td><strong>Backend y worker</strong></td><td>servidor propio</td><td>En producción, despliegue automático</td></tr>
+    </tbody>
+  </table>
+  <p class="lead" style="margin-top:16px">El pasaporte público de un lote se abre sin cuenta y sin instalar nada. La trazabilidad completa —parcela, vendimia, fermentación día a día, crianza, laboratorio y embotellado— funciona, y las reglas que importan las valida el servidor: no se declaran a mano.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>11</span></div>
+</section>
+
+<!-- 12 · LO QUE FALTA -->
+<section class="slide" data-titulo="Lo que falta">
+  <p class="eyebrow">Estado del producto</p>
+  <h2><span class="num">10</span>Lo que falta, y lo que más duele</h2>
+  <hr class="regla">
+  <div class="caja oro">
+    <h3>El sistema no funciona sin internet</h3>
+    <p>La mayoría de las bodegas del valle están en lugares remotos, con conexión mala o inexistente justo donde se toman los datos: la parcela, la recepción de uva, la bodega de fermentación. Para operar de verdad hace falta una <strong>aplicación móvil que funcione sin conexión y sincronice después</strong>. No está empezada.</p>
+  </div>
+  <table style="margin-top:16px">
+    <thead><tr><th style="width:38%">Qué</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr class="destaca"><td><strong>App móvil sin conexión</strong></td><td>No empezada. <strong>Es el bloqueante real para operar en el valle</strong></td></tr>
+      <tr><td><strong>Lote real de una bodega operando</strong></td><td><strong>Ninguno.</strong> En la base hay 69 bodegas del directorio y 68 lotes, pero ninguno viene de una bodega trabajando de verdad</td></tr>
+      <tr><td>Calibración con un enólogo</td><td>No hecha. Era el objetivo del 9 al 13 de noviembre</td></tr>
+      <tr><td>POS</td><td>No empezado</td></tr>
+      <tr><td>Módulo de investigación</td><td>No empezado. Es lo que financiaría el fondo</td></tr>
+    </tbody>
+  </table>
+  <p class="nota">En la reunión del 5 se dijo que el equipo «está trabajando ahorita» en la aplicación móvil. No es cierto, y hay que dejar de decirlo: si una bodega entra por esa función, hay que cumplirla en plena vendimia.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>12</span></div>
+</section>
+
+<!-- 13 · LA CADENA -->
+<section class="slide" data-titulo="La cadena, sin maquillaje">
+  <p class="eyebrow">Estado del producto</p>
+  <h2><span class="num">11</span>La cadena: lo que decimos y lo que hay</h2>
+  <hr class="regla">
+  <p class="lead">Medido en la base de producción hoy, 6 de noviembre de 2026.</p>
+  <div class="cols c4">
+    <div class="cifra"><b>16</b><span>transacciones de cadena registradas</span></div>
+    <div class="cifra"><b>16</b><span>de ellas en red local: <strong>todas</strong></span></div>
+    <div class="cifra"><b>0</b><span>en la red pública de pruebas</span></div>
+    <div class="cifra"><b>0</b><span>en la red principal</span></div>
+  </div>
+  <div class="cols c2" style="margin-top:22px">
+    <div class="caja"><h3>Todo lo anclado hoy es simulación</h3><p>La pantalla del pasaporte es honesta: dice «red local de pruebas» y no pone enlace al explorador. Pero en la reunión con Adrián se dijo en voz alta que el código se puede verificar en una web de la red de Stellar, y hoy no se puede. <strong>Adrián es ingeniero.</strong> Si lo comprueba, se cae la credibilidad de todo lo demás, que sí es verdad.</p></div>
+    <div class="caja oro"><h3>Arreglarlo son dos días</h3><p>Desplegar el contrato a la red pública de pruebas y anclar ahí un lote de verdad. Hace verdadero lo que ya dijimos, da la prueba técnica que la postulación pide y convierte ese lote en el primer caso real del proyecto. <strong>Es el único trabajo técnico de esta semana con retorno directo.</strong></p></div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>13</span></div>
+</section>
+
+<!-- 14 · EL MERCADO -->
+<section class="slide" data-titulo="El mercado, sin maquillaje">
+  <p class="eyebrow">Los números</p>
+  <h2><span class="num">12</span>El mercado, sin maquillaje</h2>
+  <hr class="regla">
+  <table class="compacta" style="max-width:62%">
+    <tbody>
+      <tr><td style="width:46%">Bodegas en toda Bolivia</td><td><div class="barra"><i style="width:100%"></i></div></td><td class="num" style="width:12%"><strong>~78</strong></td></tr>
+      <tr><td>Bodegas en Tarija y Cinti</td><td><div class="barra"><i style="width:64%"></i></div></td><td class="num"><strong>~50</strong></td></tr>
+      <tr><td>Contactadas hasta hoy</td><td><div class="barra"><i style="width:64%"></i></div></td><td class="num"><strong>~50</strong></td></tr>
+      <tr><td>Clientes pagando</td><td><div class="barra suave"><i style="width:0"></i></div></td><td class="num"><strong>0</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="lead" style="margin-top:18px">Es un mercado <strong>muy chico</strong>. Para esta primera versión —el ERP— el techo absoluto son 78 clientes posibles en todo el país, y de ellos la mayoría son bodegas pequeñas.</p>
+  <div class="cols c2">
+    <div class="caja"><h3>No hay margen para quemar la primera impresión</h3><p>Si convocamos a 50 bodegas y mostramos una demostración con datos de prueba, no hay una segunda convocatoria con las mismas 50.</p></div>
+    <div class="caja"><h3>El ERP solo no sostiene el proyecto</h3><p>Ni en el mejor escenario. El negocio de verdad está en lo que viene después —exportación, certificados, datos de investigación— y en el financiamiento que permita llegar hasta ahí.</p></div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>14</span></div>
+</section>
+
+<!-- 15 · COSTO DE UN LANZAMIENTO -->
+<section class="slide" data-titulo="Lo que cuesta un lanzamiento">
+  <p class="eyebrow">Los números</p>
+  <h2><span class="num">13</span>Lo que cuesta un lanzamiento</h2>
+  <hr class="regla">
+  <div class="cols c2">
+    <div>
+      <table class="compacta">
+        <caption>Viaje a Tarija · 3 personas, 2 noches</caption>
+        <tbody>
+          <tr><td>Pasajes en bus, ida y vuelta (Bs 240 × 3)</td><td class="num">720</td></tr>
+          <tr><td>Hotel con desayuno (Bs 290 × 3 × 2 noches)</td><td class="num">1.740</td></tr>
+          <tr><td>Comidas <em>(est. Bs 60 × 3 × 3 días)</em></td><td class="num">540</td></tr>
+          <tr class="total"><td><strong>Subtotal viaje</strong></td><td class="num"><strong>3.000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="compacta">
+        <caption>Evento, formato sunset, sin prensa paga</caption>
+        <tbody>
+          <tr><td>Guardia con lista en puerta <span class="pill dato">Dato</span></td><td class="num">100–150</td></tr>
+          <tr><td>Copas por tanda <em>(est.)</em></td><td class="num">500–1.500</td></tr>
+          <tr><td>Gifts para 50 invitados <em>(est.)</em></td><td class="num">2.000–4.000</td></tr>
+          <tr><td>Invitaciones y material impreso <em>(est.)</em></td><td class="num">300–600</td></tr>
+          <tr><td>Humo blanco / ballet <em>(est.)</em></td><td class="num">300–800</td></tr>
+          <tr><td>Vinos y personal de servicio</td><td class="num">en especie</td></tr>
+          <tr class="total"><td><strong>Subtotal evento</strong></td><td class="num"><strong>3.200–7.050</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="caja oro" style="margin-top:16px">
+    <h3>Total de un lanzamiento: Bs 6.200 – 10.050</h3>
+    <p>Casi cuatro veces todo lo invertido hasta hoy. Y los vinos y el personal de servicio figuran «en especie» porque salían de la bodega anfitriona: <strong>no tenemos bodega anfitriona</strong>. Si nadie los patrocina, salen de nuestro bolsillo y el total sube.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>15</span></div>
+</section>
+
+<!-- 16 · QUE PUEDE FACTURAR -->
+<section class="slide" data-titulo="Qué puede facturar el ERP">
+  <p class="eyebrow">Los números</p>
+  <h2><span class="num">14</span>Qué puede facturar el ERP en 2027</h2>
+  <hr class="regla">
+  <table>
+    <thead><tr><th>Escenario</th><th class="num" style="width:12%">Bodegas</th><th class="num" style="width:14%">Bs/mes</th><th class="num" style="width:16%">Bs/año</th><th class="num" style="width:16%">USD/año</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Conservador</strong></td><td class="num">10</td><td class="num">6.100</td><td class="num">73.200</td><td class="num">≈ 6.100</td></tr>
+      <tr class="destaca"><td><strong>Pareto</strong> · el mínimo que esperaba la reunión</td><td class="num">20</td><td class="num">16.810</td><td class="num">201.720</td><td class="num">≈ 16.800</td></tr>
+      <tr><td><strong>Optimista</strong></td><td class="num">35</td><td class="num">30.970</td><td class="num">371.640</td><td class="num">≈ 31.000</td></tr>
+    </tbody>
+  </table>
+  <p class="lead" style="margin-top:14px">Sumando puestas en marcha, certificados en cadena, packs de exportación y medio año de marketplace, el escenario Pareto llega a <strong>Bs 280.000–340.000 al año (≈ $23.000–28.000)</strong>.</p>
+  <table class="compacta" style="max-width:76%">
+    <tbody>
+      <tr><td style="width:44%">Facturación 2027, escenario Pareto</td><td><div class="barra"><i style="width:17%"></i></div></td><td class="num" style="width:16%"><strong>≈ $25.000</strong></td></tr>
+      <tr><td>Lo que otorga un <strong>SCF Build</strong></td><td><div class="barra"><i style="width:100%"></i></div></td><td class="num"><strong>hasta $150.000</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="nota">Esa es la proporción que conviene tener en la cabeza para el resto de la presentación.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>16</span></div>
+</section>
+
+<!-- 17 · MARKETPLACE -->
+<section class="slide" data-titulo="El marketplace no es el motor">
+  <p class="eyebrow">Los números</p>
+  <h2><span class="num">15</span>El marketplace, con honestidad</h2>
+  <hr class="regla">
+  <table>
+    <thead><tr><th>Escenario</th><th style="width:26%">Cuándo</th><th class="num" style="width:22%">Margen</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Conservador</strong> · 8 bodegas</td><td>1.<sup>er</sup> semestre 2027</td><td class="num"><strong>≈ Bs −90/mes</strong></td></tr>
+      <tr class="destaca"><td><strong>Base</strong> · 15 bodegas</td><td>2.º semestre 2027</td><td class="num"><strong>≈ Bs 2.690/mes</strong></td></tr>
+      <tr><td><strong>Optimista</strong> · 25 bodegas</td><td>2028</td><td class="num">≈ Bs 7.600/mes</td></tr>
+    </tbody>
+  </table>
+  <div class="caja oro" style="margin-top:18px">
+    <h3>La conclusión incómoda</h3>
+    <p>En el escenario base el marketplace deja lo mismo que <strong>cuatro bodegas en el plan Esencial</strong>, con muchísimo más trabajo operativo: atención, logística, devoluciones. Con la botella nacional a Bs 15–21, el 10 % de comisión son Bs 1,50–2,10.</p>
+  </div>
+  <p class="lead" style="margin-top:16px"><strong>El marketplace no es el motor del negocio.</strong> Es el canal que hace indispensable el ERP y el que abre la exportación, que es donde sí hay tickets grandes. Se construye por eso, no por la comisión.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>17</span></div>
+</section>
+
+<!-- 18 · CUANDO VUELVE LA PLATA -->
+<section class="slide" data-titulo="Cuándo vuelve la plata">
+  <p class="eyebrow">Los números</p>
+  <h2><span class="num">16</span>Cuándo vuelve la plata, con lanzamiento y sin él</h2>
+  <hr class="regla">
+  <div class="caja oro">
+    <h3>El hallazgo que no habíamos mirado</h3>
+    <p>El piloto gratuito hasta el 31 de marzo <strong>solo aplica a quien firma antes del 28-11-2026</strong>. Es decir: todo lo que se consiga en el evento del 28 no factura un peso hasta abril. Si no hay evento, las bodegas que entren en enero o febrero pagan desde el primer mes, con el −40 % de fundador. <strong>Posponer no solo cuesta menos: puede adelantar la primera factura en dos meses.</strong></p>
+  </div>
+  <table style="margin-top:16px">
+    <thead><tr><th style="width:36%"></th><th class="num">A · Lanzar</th><th class="num">B · Posponer</th></tr></thead>
+    <tbody>
+      <tr><td>Plata a poner nov–mar</td><td class="num">Bs 12.700–16.500</td><td class="num">Bs 5.300–9.400</td></tr>
+      <tr><td>Bodegas firmadas a marzo <em>(supuesto)</em></td><td class="num">5–8</td><td class="num">3–5</td></tr>
+      <tr class="destaca"><td><strong>De ellas, pagando antes de abril</strong></td><td class="num"><strong>0</strong></td><td class="num"><strong>3–5</strong></td></tr>
+      <tr><td>Ingreso acumulado a marzo <em>(supuesto)</em></td><td class="num">Bs 0 + puestas en marcha</td><td class="num">Bs 2.500–5.000</td></tr>
+      <tr class="total"><td><strong>Diferencia de caja a marzo</strong></td><td class="num">—</td><td class="num"><strong>≈ Bs 10.000 a favor de B</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="nota">Supuestos: que el comercial contratado active bodegas desde enero; que se cobre desde el alta con precio de fundador; que la infraestructura y la licencia se mantengan al ritmo actual. <strong>Ninguno está confirmado.</strong></p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>18</span></div>
+</section>
+
+<!-- 19 · LAS POSTULACIONES -->
+<section class="slide" data-titulo="Las postulaciones">
+  <p class="eyebrow">Lo urgente</p>
+  <h2><span class="num">17</span>Las postulaciones <span class="pill lleno">Esto no se vota</span></h2>
+  <hr class="regla">
+  <p class="lead">No lo pongo como opción porque no creo que lo sea. Es la única fuente de dinero a la vista que cambia la escala del proyecto, y cierra en dos días.</p>
+  <table class="compacta">
+    <thead><tr><th style="width:22%">Programa</th><th style="width:30%">Cuánto</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr class="destaca"><td><strong>SCF · Build Award</strong></td><td>hasta <strong>$150.000 en XLM</strong>, por tramos, <strong>sin ceder participación</strong></td><td>El formulario de interés cierra el <strong>domingo 8 de noviembre</strong>. La ronda #46 cierra el 9</td></tr>
+      <tr><td><strong>SCF · Instaward</strong></td><td>suele rondar <strong>$5.000</strong>, sprint acotado de ~30 días</td><td>Ya estamos postulando, vía el capítulo local de embajadores</td></tr>
+      <tr><td>Auditoría técnica del SCF</td><td>sin costo</td><td>Viene con el programa</td></tr>
+    </tbody>
+  </table>
+  <table class="compacta" style="margin-top:14px; max-width:84%">
+    <tbody>
+      <tr><td style="width:40%">Todo lo invertido hasta hoy</td><td><div class="barra suave"><i style="width:0.1%"></i></div></td><td class="num" style="width:16%">$140</td></tr>
+      <tr><td>Lo que falta poner hasta la 1.ª factura</td><td><div class="barra"><i style="width:1%"></i></div></td><td class="num">≈ $1.400</td></tr>
+      <tr><td>Facturación 2027, escenario Pareto</td><td><div class="barra"><i style="width:17%"></i></div></td><td class="num">≈ $25.000</td></tr>
+      <tr><td><strong>Un Build Award</strong></td><td><div class="barra"><i style="width:100%"></i></div></td><td class="num"><strong>hasta $150.000</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>19</span></div>
+</section>
+
+<!-- 20 · QUE FALTA PARA POSTULAR -->
+<section class="slide" data-titulo="Qué falta para postular">
+  <p class="eyebrow">Lo urgente</p>
+  <h2><span class="num">18</span>Qué nos falta para postular bien</h2>
+  <hr class="regla">
+  <p class="lead">El SCF Build financia proyectos por hitos para llevarlos a la red principal. Estar en la red de pruebas es exactamente el perfil que buscan — <strong>pero hay que estar, y hoy no estamos</strong>.</p>
+  <ol class="puntos">
+    <li><strong>Quién arma y manda el formulario de interés del Build</strong>, antes del domingo 8.</li>
+    <li><strong>Los dos días de trabajo técnico:</strong> desplegar el contrato a la red pública de pruebas y anclar ahí un lote de verdad. Arregla tres cosas a la vez: hace cierto lo que ya dijimos, da la prueba técnica que piden y deja el primer caso real del proyecto.</li>
+    <li><strong>Preguntar al capítulo local</strong> si tener un Instaward en curso afecta a la postulación al Build. No encontré la regla escrita y es mejor preguntarla que suponerla.</li>
+  </ol>
+  <div class="caja oro" style="margin-top:20px">
+    <h3>Lo que esto significa para esta semana</h3>
+    <p>Si se hace solo una cosa de aquí al domingo, que sea esta. Todo lo demás —el evento, las bodegas, el marketplace— se puede retomar en enero sin perder nada. La convocatoria, no.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>20</span></div>
+</section>
+
+<!-- 21 · LAS DOS OPCIONES EN DETALLE -->
+<section class="slide" data-titulo="Las dos opciones en detalle">
+  <p class="eyebrow">La decisión</p>
+  <h2><span class="num">19</span>Las dos opciones, a favor y en contra</h2>
+  <hr class="regla">
+  <div class="cols c2">
+    <div class="caja">
+      <h3>A · Mantener el lanzamiento del 28</h3>
+      <p style="margin-bottom:7px"><strong style="color:var(--tinta)">A favor</strong></p>
+      <ul class="puntos"><li>Mantiene el impulso y la fecha que ya conocen algunos</li><li>Genera contactos y reuniones para diciembre y enero</li><li>La presión de una fecha hace que las cosas se terminen</li></ul>
+      <p style="margin:10px 0 7px"><strong style="color:var(--tinta)">En contra</strong></p>
+      <ul class="puntos"><li>Cuesta Bs 6.200–10.050 que hoy no están presupuestados</li><li>Se muestra una demostración, no un caso real</li><li>Es una sola oportunidad ante un mercado de 78 bodegas</li><li>Lo que se consiga no factura hasta abril de 2027</li><li>La app sin conexión no existe, y es lo primero que pregunta una bodega del valle</li></ul>
+    </div>
+    <div class="caja oro">
+      <h3>B · Posponer y entrar de forma orgánica</h3>
+      <p style="margin-bottom:7px"><strong style="color:var(--tinta)">Qué incluye</strong></p>
+      <ul class="puntos"><li>Terminar el software: la app sin conexión y la calibración</li><li>Conseguir el primer caso real con un lote embotellado</li><li><strong>Contratar a alguien que recorra las bodegas</strong>; hay gente identificada, falta contactarla</li><li>Hacer el evento cuando haya algo real que mostrar</li></ul>
+      <p style="margin:10px 0 7px"><strong style="color:var(--tinta)">En contra</strong></p>
+      <ul class="puntos"><li>Se pierde el impulso, y una fecha es lo que hace que las cosas se terminen</li><li>«Más adelante» se puede convertir en «nunca» si nadie se hace cargo</li><li>Contratar implica costo variable y un trabajo de selección que nadie tiene agendado</li></ul>
+    </div>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>21</span></div>
+</section>
+
+<!-- 22 · LO QUE RECOMIENDO -->
+<section class="slide" data-titulo="Lo que recomiendo">
+  <p class="eyebrow">La decisión</p>
+  <h2><span class="num">20</span>Lo que recomiendo, y con qué condiciones</h2>
+  <hr class="regla">
+  <p class="lead"><strong>La opción B</strong>, con tres condiciones que la separan de simplemente aflojar. Posponer sin estas tres cosas es exactamente el riesgo que la opción B tiene en contra.</p>
+  <ol class="puntos">
+    <li><strong>Que se fije hoy una fecha nueva de evento</strong>, aunque sea tentativa: finales de enero o febrero. Una fecha sin dueño no es una fecha.</li>
+    <li><strong>Que esta semana no se haga nada que no sea la postulación:</strong> los dos días de red de pruebas y el formulario antes del domingo.</li>
+    <li><strong>Que se defina quién contacta a la persona de Tarija</strong> y bajo qué esquema. El modelo de precios recomienda Bs 400 por bodega activada más 5 % de lo cobrado en 12 meses, sin parte fija.</li>
+  </ol>
+  <div class="caja" style="margin-top:20px">
+    <h3>Lo que no se decide esta semana</h3>
+    <p>El precio de la licencia institucional de investigación (falta benchmarking) · Las comisiones del marketplace (falta cerrar tarifas con DHL y FedEx) · La migración a Solana · El reparto de participación: el techo del 17 % ya está acordado y alcanza por ahora.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>22</span></div>
+</section>
+
+<!-- 23 · LO QUE NECESITO -->
+<section class="slide" data-titulo="Lo que necesito del equipo">
+  <p class="eyebrow">Cierre</p>
+  <h2><span class="num">21</span>Lo que necesito del equipo</h2>
+  <hr class="regla">
+  <ol class="puntos">
+    <li><strong>La decisión A o B, con fecha.</strong></li>
+    <li><strong>Quién arma la postulación al SCF</strong> y la manda antes del domingo 8.</li>
+    <li><strong>Una reunión para recorrer el software de izquierda a derecha.</strong> Los tres fundadores tenemos que poder abrir el ERP, dar de alta una bodega, registrar un lote completo y explicar el pasaporte sin ayuda. Hoy no estamos los tres en ese punto, y eso nos limita en cada reunión con una bodega: cualquiera de nosotros tiene que poder mostrarlo y responder.</li>
+    <li><strong>Quién contacta a la persona de Tarija</strong> para el trabajo comercial de campo.</li>
+  </ol>
+  <div class="caja oro" style="margin-top:22px">
+    <h3>Una cosa más, para que quede dicha</h3>
+    <p>Lo invertido son Bs 1.680 y más de 200 horas. <strong>El riesgo de este proyecto nunca fue la plata: son los meses.</strong> Por eso la decisión que importa no es cuánto gastamos el 28 de noviembre, sino qué queremos que este proyecto sea en marzo.</p>
+  </div>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>23</span></div>
+</section>
+
+<!-- 24 · FUENTES -->
+<section class="slide" data-titulo="De dónde sale cada número">
+  <p class="eyebrow">Anexo</p>
+  <h2><span class="num">22</span>De dónde sale cada número</h2>
+  <hr class="regla">
+  <table class="compacta">
+    <thead><tr><th style="width:38%">Dato</th><th>Fuente</th></tr></thead>
+    <tbody>
+      <tr><td>Citas de la reunión del 5 de noviembre</td><td>Grabación de 26 minutos, transcrita · <em>comercial/daroca/reunion-05-11-transcripcion.txt</em></td></tr>
+      <tr><td>Lista de precios y escenarios 2027</td><td><em>modelo-de-precios.md</em> §0 y §9 — capítulo 1 de esta bitácora</td></tr>
+      <tr><td>Marketplace</td><td><em>modelo-de-precios.md</em> §4</td></tr>
+      <tr><td>Presupuesto del evento</td><td><em>analisis-reunion-01-11.md</em> §6</td></tr>
+      <tr><td>Costo del viaje</td><td><em>modelo-de-precios.md</em> §13.2 · las comidas son una estimación nueva</td></tr>
+      <tr><td>Estado de la cadena</td><td>Consulta directa a la base de producción, 06-11-2026</td></tr>
+      <tr><td>Commits, repositorios y archivos</td><td>Conteo sobre los 15 repositorios, 06-11-2026</td></tr>
+      <tr><td>SCF Build e Instawards</td><td><em>communityfund.stellar.org/awards</em> y el handbook del SCF</td></tr>
+      <tr><td>Mercado de 78 bodegas</td><td>Dato propio, dicho en la reunión del 5</td></tr>
+    </tbody>
+  </table>
+  <p class="nota">Las cifras marcadas <em>(est.)</em> son estimaciones y están señaladas como tales en cada lámina. Las que llevan <span class="pill dato">Dato</span> salieron de una reunión o de una medición.</p>
+  <div class="pie-slide"><span class="wordmark">Drinks on Chain</span><span>24</span></div>
+</section>
+
+</div><!-- /capitulo 2 -->
+
+
 </div><!-- /stage -->
 </div><!-- /deck -->
+
+<div class="capitulos" id="capitulos" role="tablist" aria-label="Capítulos de la bitácora"></div>
 
 <nav class="nav" aria-label="Navegación de la presentación">
   <button type="button" id="ant" aria-label="Lámina anterior">&larr;</button>
@@ -1222,14 +1786,16 @@
 
 <script>
 (function(){
-  var stage = document.getElementById('stage');
-  var slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
-  var cuenta = document.getElementById('cuenta');
-  var indice = document.getElementById('indice');
-  var actual = 0;
+  var stage   = document.getElementById('stage');
+  var barra   = document.getElementById('capitulos');
+  var cuenta  = document.getElementById('cuenta');
+  var indice  = document.getElementById('indice');
+  var caps    = Array.prototype.slice.call(stage.querySelectorAll('.capitulo'));
+  var capAct  = caps.length - 1;   /* el ultimo capitulo es el que se muestra por defecto */
+  var actual  = 0;
 
-  /* El cuerpo de cada lámina se centra entre la regla de oro y el pie */
-  slides.forEach(function(s){
+  /* El cuerpo de cada lamina se centra entre la regla de oro y el pie */
+  Array.prototype.slice.call(stage.querySelectorAll('.slide')).forEach(function(s){
     var regla = s.querySelector(':scope > .regla');
     if (!regla) return;
     var cuerpo = document.createElement('div');
@@ -1244,27 +1810,54 @@
     s.insertBefore(cuerpo, s.querySelector(':scope > .glosario, :scope > .pie-slide'));
   });
 
-  slides.forEach(function(s, i){
-    var op = document.createElement('option');
-    op.value = String(i);
-    op.textContent = (i + 1) + ' · ' + (s.dataset.titulo || '');
-    indice.appendChild(op);
+  /* Pestanas de capitulo */
+  caps.forEach(function(c, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.innerHTML = '<i>Capítulo ' + (i + 1) + ' · ' + (c.dataset.fecha || '') + '</i>' +
+                  (c.dataset.titulo || ('Capítulo ' + (i + 1)));
+    b.addEventListener('click', function(){ irCapitulo(i, 0); });
+    barra.appendChild(b);
   });
 
-  function escalar(){
-    var m = 28;
-    var k = Math.min((window.innerWidth - m) / 1280, (window.innerHeight - m - 40) / 720);
-    stage.style.transform = 'translate(-50%, -50%) scale(' + k + ')';
+  function laminas(i){ return Array.prototype.slice.call(caps[i].querySelectorAll('.slide')); }
+
+  function poblarIndice(){
+    indice.innerHTML = '';
+    laminas(capAct).forEach(function(s, j){
+      var op = document.createElement('option');
+      op.value = String(j);
+      op.textContent = (j + 1) + ' · ' + (s.dataset.titulo || '');
+      indice.appendChild(op);
+    });
+  }
+
+  function irCapitulo(i, j, conHash){
+    capAct = Math.max(0, Math.min(caps.length - 1, i));
+    caps.forEach(function(c, k){ c.classList.toggle('is-active', k === capAct); });
+    Array.prototype.slice.call(barra.children).forEach(function(b, k){
+      b.setAttribute('aria-current', k === capAct ? 'true' : 'false');
+    });
+    poblarIndice();
+    ir(j || 0, conHash);
   }
 
   function ir(i, conHash){
-    actual = Math.max(0, Math.min(slides.length - 1, i));
-    slides.forEach(function(s, j){ s.classList.toggle('is-active', j === actual); });
-    cuenta.textContent = (actual + 1) + ' / ' + slides.length;
+    var sl = laminas(capAct);
+    actual = Math.max(0, Math.min(sl.length - 1, i));
+    sl.forEach(function(s, j){ s.classList.toggle('is-active', j === actual); });
+    cuenta.textContent = (actual + 1) + ' / ' + sl.length;
     indice.value = String(actual);
     if (conHash !== false) {
-      try { history.replaceState(null, '', '#' + (actual + 1)); } catch (e) {}
+      try { history.replaceState(null, '', '#c' + (capAct + 1) + '-' + (actual + 1)); } catch (e) {}
     }
+  }
+
+  function escalar(){
+    var m = 28;
+    var k = Math.min((window.innerWidth - m) / 1280, (window.innerHeight - m - 86) / 720);
+    stage.style.transform = 'translate(-50%, -50%) scale(' + k + ')';
   }
 
   document.getElementById('sig').addEventListener('click', function(){ ir(actual + 1); });
@@ -1273,19 +1866,36 @@
   indice.addEventListener('change', function(){ ir(parseInt(indice.value, 10)); });
 
   document.addEventListener('keydown', function(e){
-    if (e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if (e.target && /^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName)) return;
     switch (e.key) {
       case 'ArrowRight': case 'PageDown': case ' ': ir(actual + 1); e.preventDefault(); break;
       case 'ArrowLeft': case 'PageUp': ir(actual - 1); e.preventDefault(); break;
       case 'Home': ir(0); e.preventDefault(); break;
-      case 'End': ir(slides.length - 1); e.preventDefault(); break;
+      case 'End': ir(laminas(capAct).length - 1); e.preventDefault(); break;
     }
   });
 
   window.addEventListener('resize', escalar);
   escalar();
-  var inicial = parseInt((location.hash || '').replace('#', ''), 10);
-  ir(isNaN(inicial) ? 0 : inicial - 1, false);
+
+  /* Un enlace compartido (#c2-18) tambien funciona con la pagina ya abierta */
+  window.addEventListener('hashchange', function(){
+    var hh = (location.hash || '').replace('#', '');
+    var mm = /^c(\d+)-(\d+)$/.exec(hh);
+    if (mm) irCapitulo(parseInt(mm[1], 10) - 1, parseInt(mm[2], 10) - 1, false);
+    else if (/^\d+$/.test(hh)) irCapitulo(0, parseInt(hh, 10) - 1, false);
+  });
+
+  /* #c2-5 = capitulo 2, lamina 5 · #5 = capitulo 1, lamina 5 (enlaces antiguos) */
+  var h = (location.hash || '').replace('#', '');
+  var m = /^c(\d+)-(\d+)$/.exec(h);
+  if (m) {
+    irCapitulo(parseInt(m[1], 10) - 1, parseInt(m[2], 10) - 1, false);
+  } else if (/^\d+$/.test(h)) {
+    irCapitulo(0, parseInt(h, 10) - 1, false);
+  } else {
+    irCapitulo(caps.length - 1, 0, false);
+  }
 })();
 </script>
 </body>
